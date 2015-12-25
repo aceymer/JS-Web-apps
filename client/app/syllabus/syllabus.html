@@ -1,0 +1,78 @@
+<md-toolbar class="md-theme-light">
+  <div class="md-toolbar-tools">
+    <md-button aria-label="Go Back" style="color: greenyellow;" ng-click="goBack()">
+      Go Back
+    </md-button>
+    <h2>
+      <span hide-sm hide-xs>{{syllabus.course}}</span>
+      <small>{{syllabus.class}}</small>
+    </h2>
+    <span flex></span>
+    <h2>
+      <span hide-sm hide-xs>{{syllabus.education}} - </span>
+      <span hide-sm hide-xs>{{syllabus.academy}}</span>
+    </h2>
+  </div>
+</md-toolbar>
+
+<md-content flex-offset="10" flex="80">
+  <md-list-item class="md-3-line">
+    <div hide-sm hide-xs><img ng-src="{{syllabus.iconurl}}" alt="MEAN" style="width:220px; height: auto; margin-right:20px;margin-top:10px;"></div>
+    <div flex-sm="100" flex-xs="100" class="md-list-item-text" layout="column">
+      <h2>{{ syllabus.title }}</h2>
+      <h3>{{ syllabus.subtitle }}</h3>
+      <h4>Lecturer: {{ syllabus.lecturer }}</h4>
+    </div>
+  </md-list-item>
+  <hr>
+
+  <div flex="100">
+    <md-button aria-label="Add New" ng-click="addWeekplan()" class="md-raised md-primary">
+      <i class="fa fa-plus"></i> Add weekplan
+    </md-button>
+  </div>
+  <div flex-sm="100" flex-xs="100" layout="column">
+    <md-card ng-repeat="weekplan in syllabus.weekplans | orderBy : '-week'">
+      <md-card-content layout="row" layout-wrap>
+        <div flex="15" flex-sm="90" flex-xs="90">
+          <div style="text-align: center;">
+            <md-button aria-label="Show week" class="md-fab md-primary"  ng-click="goToWeekPlan(weekplan, $event)">
+              <div style="font-size:24px;">
+                <i class="fa fa-calendar" ></i>
+                </div>
+            </md-button>
+          </div>
+          <div style="text-align: center;">
+            <md-button class="md-raised" aria-label="Show week" ng-click="goToWeekPlan(weekplan, $event)">
+              Week {{weekplan.week | date : 'ww'}}
+            </md-button>
+          </div>
+        </div>
+        <div flex="40" flex-sm="90" flex-xs="90">
+          <h4><i class="fa fa-book"></i> Topics</h4>
+          <div ng-repeat="topic in weekplan.topics" style="word-wrap: break-word;">
+            <h5>{{topic.title}}</h5>
+            <p ng-bind-html='topic.description'></p>
+          </div>
+        </div>
+        <div flex="40" flex-sm="90" flex-xs="90">
+          <h4><i class="fa fa-bookmark"></i> Literature</h4>
+          <div ng-repeat="literature in weekplan.literature" style="word-wrap: break-word;">
+            <h5>{{literature.title}}</h5>
+            <a href="{{literature.url}}">{{literature.url}}</a>
+          </div>
+        </div>
+        <div flex="5" pull-right style="text-align: right; align: top;">
+          <md-button aria-label="Delete weekplan" ng-click="deleteWeekPlan(weekplan, $event)">
+            <div style="font-size:20px; color:darkred;">
+              <i class="fa fa-trash"></i>
+            </div>
+          </md-button>
+        </div>
+      </md-card-content>
+    </md-card>
+</div>
+{{$scope.status}}
+</md-content>
+
+<footer></footer>

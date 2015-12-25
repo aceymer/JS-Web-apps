@@ -1,0 +1,58 @@
+<md-toolbar class="md-theme-light">
+  <div class="md-toolbar-tools">
+    <md-button aria-label="Go Back" style="color: greenyellow;" ng-click="goBack()">
+      Go Back
+    </md-button>
+    <span hide-sm hide-xs>{{weekplan.syllabus.course}}</span>
+      <small>{{weekplan.syllabus.class}}</small>
+    </h2>
+    <span flex></span>
+    <h2>
+      <span hide-sm hide-xs>{{weekplan.syllabus.education}} - </span>
+      <span hide-sm hide-xs>{{weekplan.syllabus.academy}}</span>
+    </h2>
+  </div>
+</md-toolbar>
+
+<md-content flex-offset="10" flex="80">
+  <div flex-sm="100" flex-xs="100" layout="column">
+    <md-card>
+      <md-card-content layout="row" layout-wrap>
+        <div flex="15" flex-sm="100" flex-xs="100">
+          <div style="text-align: center;font-size:60px;">
+            <i class="fa fa-calendar" ></i>
+          </div>
+          <h3 style="text-align: center;">
+            Week {{weekplan.week | date : 'ww'}}
+          </h3>
+        </div>
+        <div flex="40" flex-sm="100" flex-xs="100">
+          <h4><i class="fa fa-book"></i> Topics</h4>
+          <div ng-repeat="topic in weekplan.topics" style="word-wrap: break-word;">
+            <h5>{{topic.title}}</h5>
+            <p ng-bind-html='topic.description'></p>
+          </div>
+        </div>
+        <div flex="40" flex-sm="100" flex-xs="100">
+          <h4><i class="fa fa-bookmark"></i> Literature</h4>
+          <div ng-repeat="literature in weekplan.literature" style="word-wrap: break-word;">
+            <h5>{{literature.title}}</h5>
+            <a href="{{literature.url}}">{{literature.url}}</a>
+          </div>
+        </div>
+        <div flex="100">
+          <hr>
+          <h2>Videos, you should see before class</h2>
+          <ng-video-preview source="youtube" url="https://www.youtube.com/watch?v=XgyQ_3L5R40"></ng-video-preview>
+        </div>
+        <div flex="100">
+          <hr>
+          <h2>Other videos</h2>
+          <ng-video-preview source="youtube" url="https://www.youtube.com/watch?v=COvnHv42T-A"></ng-video-preview>
+        </div>
+      </md-card-content>
+    </md-card>
+</div>
+</md-content>
+
+<footer></footer>
