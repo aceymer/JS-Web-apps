@@ -4,7 +4,7 @@
       Go Back
     </md-button>
     <span hide-sm hide-xs>{{weekplan.syllabus.course}}</span>
-      <small>{{weekplan.syllabus.class}}</small>
+    <small>{{weekplan.syllabus.class}}</small>
     </h2>
     <span flex></span>
     <h2>
@@ -19,40 +19,108 @@
     <md-card>
       <md-card-content layout="row" layout-wrap>
         <div flex="15" flex-sm="100" flex-xs="100">
-          <div style="text-align: center;font-size:60px;">
-            <i class="fa fa-calendar" ></i>
+          <div style="text-align: center;">
+            <md-button style="font-size:60px;" aria-label="Edit presentation" ng-click="edit()" class="md-raised">
+              <i class="fa fa-calendar" ng-style="{true: {color: 'blue'}, false: {}}[editPage]"></i>
+            </md-button>
           </div>
-          <h3 style="text-align: center;">
+          <h3 style="text-align: center; margin-top:5px;">
             Week {{weekplan.week | date : 'ww'}}
           </h3>
-        </div>
-        <div flex="40" flex-sm="100" flex-xs="100">
-          <h4><i class="fa fa-book"></i> Topics</h4>
-          <div ng-repeat="topic in weekplan.topics" style="word-wrap: break-word;">
-            <h5>{{topic.title}}</h5>
-            <p ng-bind-html='topic.description'></p>
+          <div ng-show="!editPage"  style="text-align: center;">
+            <md-button style="font-size:20px;" aria-label="Edit presentation" ng-click="edit()" class="md-icon-button">
+              <i class="fa fa-pencil"></i>
+            </md-button>
+          </div>
+          <div ng-show="editPage"  style="text-align: center;">
+            <md-button style="font-size:20px;" aria-label="Edit presentation" ng-click="undo()" class="md-icon-button">
+              <i class="fa fa-undo"></i>
+            </md-button>
+            <md-button style="font-size:20px;" aria-label="Edit presentation" ng-click="save()" class="md-icon-button md-primary">
+              <i class="fa fa-floppy-o"></i>
+            </md-button>
+          </div>
+          <div ng-show="editPage"  style="text-align: center;color:red;">
+            <h4>Edit mode active</h4>
           </div>
         </div>
-        <div flex="40" flex-sm="100" flex-xs="100">
-          <h4><i class="fa fa-bookmark"></i> Literature</h4>
-          <div ng-repeat="literature in weekplan.literature" style="word-wrap: break-word;">
-            <h5>{{literature.title}}</h5>
-            <a href="{{literature.url}}">{{literature.url}}</a>
-          </div>
-        </div>
-        <div flex="100">
-          <hr>
-          <h2>Videos, you should see before class</h2>
-          <ng-video-preview source="youtube" url="https://www.youtube.com/watch?v=XgyQ_3L5R40"></ng-video-preview>
-        </div>
-        <div flex="100">
-          <hr>
-          <h2>Other videos</h2>
-          <ng-video-preview source="youtube" url="https://www.youtube.com/watch?v=COvnHv42T-A"></ng-video-preview>
+        <div flex flex-sm="100" flex-xs="100">
+          <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab>
+              <md-tab-label>
+                <i class="fa fa-book"></i> Presentation
+                <md-badge>{{weekplan.topics ? weekplan.topics.length : 0}}</md-badge>
+              </md-tab-label>
+              <md-tab-body>
+                <div ng-show="!editPage">
+                  <small ng-show="!weekplan.topics || weekplan.topics.length===0">No presentation this week</small>
+                  <div ng-repeat="topic in weekplan.topics || weekplan.topics.length===0" style="word-wrap: break-word;">
+                    <h5>{{topic.title}}</h5>
+                    <p ng-bind-html='topic.description'></p>
+                  </div>
+                </div>
+              </md-tab-body>
+            </md-tab>
+            <md-tab>
+              <md-tab-label>
+                <i class="fa fa-book"></i> Videos
+                <md-badge>{{weekplan.videosBeforeClass || weekplan.videosOthers ? weekplan.videosBeforeClass.length + weekplan.videosOthers.length: 0}}</md-badge>
+              </md-tab-label>
+              <md-tab-body>
+                <div ng-show="!editPage">
+                  <h5>Videos, you should see before class</h5>
+                  <small ng-show="!weekplan.videosBeforeClass">No videos this week</small>
+                  <div ng-repeat="video in weekplan.videosBeforeClass" style="word-wrap: break-word;">
+                    <p>{{video.title}}</p>
+                    <ng-video-preview source="youtube" url="video.url"></ng-video-preview>
+                  </div>
+                  <hr>
+                  <h5>Other videos</h5>
+                  <small ng-show="!weekplan.videosOthers">No videos this week</small>
+                  <div ng-repeat="video in weekplan.videosOthers" style="word-wrap: break-word;">
+                    <p>{{video.title}}</p>
+                    <ng-video-preview source="youtube" url="video.url"></ng-video-preview>
+                  </div>
+                </div>
+              </md-tab-body>
+            </md-tab>
+            <md-tab>
+              <md-tab-label>
+                <i class="fa fa-bookmark"></i> Literature
+                <md-badge>{{weekplan.literature ? weekplan.literature.length : 0}}</md-badge>
+              </md-tab-label>
+              <md-tab-body>
+                <div ng-show="!editPage">
+
+                  <small ng-show="!weekplan.literature || weekplan.literature.length===0"> No literature this week </small>
+                  <div ng-repeat="literature in weekplan.literature" style="word-wrap: break-word;">
+                    <h5>{{literature.title}}</h5>
+                    <a href="{{literature.url}}">{{literature.url}}</a>
+                  </div>
+                </div>
+              </md-tab-body>
+            </md-tab>
+            <md-tab>
+              <md-tab-label>
+                <i class="fa fa-flag"></i> Assignments
+                <md-badge>{{weekplan.assignments ? weekplan.assignments.length : 0}}</md-badge>
+              </md-tab-label>
+              <md-tab-body>
+                <div ng-show="!editPage">
+
+                  <small ng-show="!weekplan.assignments">No assignments this week</small>
+                  <div ng-repeat="assignment in weekplan.assignments" style="word-wrap: break-word;">
+                    <h5>{{assignment.title}}</h5>
+                    <p ng-bind-html='assignment.description'></p>
+                  </div>
+                </div>
+              </md-tab-body>
+            </md-tab>
+          </md-tabs>
         </div>
       </md-card-content>
     </md-card>
-</div>
+  </div>
 </md-content>
 
 <footer></footer>

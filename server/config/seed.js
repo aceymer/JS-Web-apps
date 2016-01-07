@@ -72,53 +72,42 @@ Syllabus.find({}).removeAsync()
         class: '4th semester, spring 2015',
         lecturer: 'Lars Juul Bilde',
         academy: 'ErhvervsAkademi SydVest',
-        weekplans: ['1117bcec37407aa60754252a', '1117bcec37407aa60754252b']
+        weekplans: [{
+          week: 4,
+          topics: [{
+            title: 'Presentation Week 5-6',
+            description: '<a href="https://prezi.com/iuuluefzvf60/week-5-6-js-web-apps-spring-2015/?utm_campaign=share&utm_medium=copy ">Prezi link</a>'
+          }, {
+            title: 'Free Bootstrap CV Resume HTML Template',
+            description: '<a href="http://bootstraptaste.com/kelly-free-bootstrap-cv-resume-html-template/">Bootstrap link</a>'
+          }],
+          literature: [{
+            title: 'Reference guide HTML',
+            url: 'http://www.tutorialspoint.com/html/index.htm'
+          }, {
+            title: 'Reference guide HTML5',
+            url: 'http://www.tutorialspoint.com/html5/index.htm'
+          }]
+        }, {
+          week: 5,
+          topics: [{
+            title: 'Presentation Week 5-6',
+            description: '<a href="https://prezi.com/iuuluefzvf60/week-5-6-js-web-apps-spring-2015/?utm_campaign=share&utm_medium=copy ">Prezi link</a>'
+          }, {
+            title: 'Free Bootstrap CV Resume HTML Template',
+            description: '<a href="http://bootstraptaste.com/kelly-free-bootstrap-cv-resume-html-template/">Bootstrap link</a>'
+          }],
+          literature: [{
+            title: 'Reference guide HTML',
+            url: 'http://www.tutorialspoint.com/html/index.htm'
+          }, {
+            title: 'Reference guide HTML5',
+            url: 'http://www.tutorialspoint.com/html5/index.htm'
+          }]
+        }],
+        year: 2015
       })
       .then(() => {
         console.log('finished populating syllabuses');
-      });
-  });
-
-Weekplan.find({}).removeAsync()
-  .then(() => {
-    Weekplan.createAsync({
-        _id: '1117bcec37407aa60754252a',
-        week: '2015-01-05 10:10',
-        topics: [{
-          title: 'Presentation Week 5-6',
-          description: '<a href="https://prezi.com/iuuluefzvf60/week-5-6-js-web-apps-spring-2015/?utm_campaign=share&utm_medium=copy ">Prezi link</a>'
-        }, {
-          title: 'Free Bootstrap CV Resume HTML Template',
-          description: '<a href="http://bootstraptaste.com/kelly-free-bootstrap-cv-resume-html-template/">Bootstrap link</a>'
-        }],
-        literature: [{
-          title: 'Reference guide HTML',
-          url: 'http://www.tutorialspoint.com/html/index.htm'
-        }, {
-          title: 'Reference guide HTML5',
-          url: 'http://www.tutorialspoint.com/html5/index.htm'
-        }],
-        syllabus: '5677bcec37407aa60754252b'
-      }, {
-        _id: '1117bcec37407aa60754252b',
-        week: '2015-01-12 10:10',
-        topics: [{
-          title: 'Presentation Week 5-6',
-          description: '<a href="https://prezi.com/iuuluefzvf60/week-5-6-js-web-apps-spring-2015/?utm_campaign=share&utm_medium=copy ">Prezi link</a>'
-        }, {
-          title: 'Free Bootstrap CV Resume HTML Template',
-          description: '<a href="http://bootstraptaste.com/kelly-free-bootstrap-cv-resume-html-template/">Bootstrap link</a>'
-        }],
-        literature: [{
-          title: 'Reference guide HTML',
-          url: 'http://www.tutorialspoint.com/html/index.htm'
-        }, {
-          title: 'Reference guide HTML5',
-          url: 'http://www.tutorialspoint.com/html5/index.htm'
-        }],
-        syllabus: '5677bcec37407aa60754252b'
-      })
-      .then(() => {
-        console.log('finished populating weekplans');
       });
   });

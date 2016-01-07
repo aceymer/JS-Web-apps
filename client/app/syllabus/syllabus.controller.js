@@ -1,16 +1,47 @@
 'use strict';
 
 angular.module('virtualunitedApp')
-  .controller('SyllabusCtrl', function ($scope, $state, $stateParams, $mdDialog, Syllabus) {
-    $scope.syllabus = Syllabus.get({ id: $stateParams.id });
+  .controller('SyllabusCtrl', function ($scope, $state, $stateParams, $mdDialog, $mdMedia, $mdToast, Syllabus) {
+    Syllabus.getAll({ id: $stateParams.id }, function(syllabus) {
+      $scope.syllabus = syllabus;
+      setWeekNums();
+    });
     $scope.goBack = function(){
         $state.go('main');
     };
     $scope.goToWeekPlan = function(weekplan, event){
-      $state.go('weekplan', {id: weekplan._id});
+      $state.go('weekplan', {sid: $scope.syllabus._id, wid: weekplan._id});
     };
+
     $scope.addWeekplan = function(){
-      $state.go('weekplan', {id: weekplan._id});
+      $scope.newWeekplan = {week:$scope.newWeek};
+      $scope.syllabus.weekplans.push($scope.newWeekplan);
+      Syllabus.update({ id: $scope.syllabus._id },$scope.syllabus, function(syllabus) {
+        $scope.syllabus = syllabus
+        setWeekNums();
+        var toast = $mdToast.simple()
+          .textContent('Weekplan created')
+          .action('OK')
+          .highlightAction(false)
+          .position('top');
+        $mdToast.show(toast);
+      });
+    };
+
+    var setWeekNums = function(){
+      var startDate = moment("01-01-" + $scope.syllabus.year, "MM-DD-YYYY");
+      $scope.weeks = [];
+      var weeksInYear = startDate.isoWeeksInYear();
+
+      for(var i = 1; i < weeksInYear + 1; i++){
+        $scope.weeks.push(i);
+      }
+      $scope.syllabus.weekplans.forEach(function(weekplan){
+         _.remove($scope.weeks,function(week) {
+          return week === weekplan.week;
+        });
+      });
+      $scope.newWeek = moment().week();
     };
 
     $scope.deleteWeekPlan = function(weekplan, event){
@@ -23,10 +54,20 @@ angular.module('virtualunitedApp')
           .ok('Please do it!')
           .cancel('No I changed my mind');
       $mdDialog.show(confirm).then(function() {
-        $scope.status = 'You decided to get rid of your debt.';
-      }, function() {
-        $scope.status = 'You decided to keep your debt.';
+        var newValue = _.remove($scope.syllabus.weekplans,function(plan) {
+          return plan._id === weekplan._id;
+        });
+
+        Syllabus.update({ id: $scope.syllabus._id },$scope.syllabus, function(syllabus) {
+          $scope.syllabus = syllabus;
+          setWeekNums();
+          var toast = $mdToast.simple()
+            .textContent('Weekplan updated')
+            .action('OK')
+            .highlightAction(false)
+            .position('top');
+          $mdToast.show(toast);
+        });
       });
     };
-
   });

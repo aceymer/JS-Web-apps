@@ -13,9 +13,17 @@ var SyllabusSchema = new mongoose.Schema({
   lecturer: String,
   academy: String,
   weekplans: [{
-    type: Schema.ObjectId,
-    ref: 'Weekplan'
-  }]
+    week: Number,
+    topics: [{
+      title: String,
+      description: String
+    }],
+    literature: [{
+      title: String,
+      url: String
+    }]
+  }],
+  year: Number
 });
 
 export default mongoose.model('Syllabus', SyllabusSchema);

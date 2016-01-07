@@ -15,7 +15,7 @@
   </div>
 </md-toolbar>
 
-<md-content flex-offset="10" flex="80">
+<md-content flex-offset="5" flex="90">
   <md-list-item class="md-3-line">
     <div hide-sm hide-xs><img ng-src="{{syllabus.iconurl}}" alt="MEAN" style="width:220px; height: auto; margin-right:20px;margin-top:10px;"></div>
     <div flex-sm="100" flex-xs="100" class="md-list-item-text" layout="column">
@@ -27,14 +27,21 @@
   <hr>
 
   <div flex="100">
-    <md-button aria-label="Add New" ng-click="addWeekplan()" class="md-raised md-primary">
-      <i class="fa fa-plus"></i> Add weekplan
-    </md-button>
+    <form name="weekplanForm">
+      <md-input-container style="margin-right: 10px;">
+        <md-select aria-label="new weekplan" ng-model="newWeek">
+          <md-option ng-repeat="number in weeks" value="{{number}}">Week {{number}}</md-option>
+        </md-select>
+      </md-input-container>
+      <md-button aria-label="Add New" ng-click="addWeekplan($event)" class="md-raised md-primary">
+        <i class="fa fa-plus"></i> Add weekplan
+      </md-button>
+    </form>
   </div>
   <div flex-sm="100" flex-xs="100" layout="column">
     <md-card ng-repeat="weekplan in syllabus.weekplans | orderBy : '-week'">
       <md-card-content layout="row" layout-wrap>
-        <div flex="15" flex-sm="90" flex-xs="90">
+        <div flex="10" flex-sm="90" flex-xs="90">
           <div style="text-align: center;">
             <md-button aria-label="Show week" class="md-fab md-primary"  ng-click="goToWeekPlan(weekplan, $event)">
               <div style="font-size:24px;">
@@ -44,25 +51,45 @@
           </div>
           <div style="text-align: center;">
             <md-button class="md-raised" aria-label="Show week" ng-click="goToWeekPlan(weekplan, $event)">
-              Week {{weekplan.week | date : 'ww'}}
+              Week {{weekplan.week}}
             </md-button>
           </div>
         </div>
-        <div flex="40" flex-sm="90" flex-xs="90">
-          <h4><i class="fa fa-book"></i> Topics</h4>
+        <div flex="20" flex-sm="90" flex-xs="90">
+          <h4><i class="fa fa-book"></i> Presentation</h4>
+          <small ng-show="!weekplan.topics || weekplan.topics.length===0">No presentation this week</small>
           <div ng-repeat="topic in weekplan.topics" style="word-wrap: break-word;">
             <h5>{{topic.title}}</h5>
             <p ng-bind-html='topic.description'></p>
           </div>
         </div>
-        <div flex="40" flex-sm="90" flex-xs="90">
+        <div flex="20" flex-sm="90" flex-xs="90">
+          <h4><i class="fa fa-book"></i> Videos</h4>
+          <small ng-show="!weekplan.videosBeforeClass && !weekplan.videosOthers">No videos this week</small>
+          <div ng-repeat="video in weekplan.videosBeforeClass" style="word-wrap: break-word;">
+            <h5>{{video.title}}</h5>
+          </div>
+          <div ng-repeat="video in weekplan.videosOthers" style="word-wrap: break-word;">
+            <h5>{{video.title}}</h5>
+          </div>
+        </div>
+        <div flex="20" flex-sm="90" flex-xs="90">
           <h4><i class="fa fa-bookmark"></i> Literature</h4>
+          <small ng-show="!weekplan.literature || weekplan.literature.length===0">No literature this week</small>
           <div ng-repeat="literature in weekplan.literature" style="word-wrap: break-word;">
             <h5>{{literature.title}}</h5>
             <a href="{{literature.url}}">{{literature.url}}</a>
           </div>
         </div>
-        <div flex="5" pull-right style="text-align: right; align: top;">
+        <div flex="20" flex-sm="90" flex-xs="90">
+          <h4><i class="fa fa-flag"></i> Assignments</h4>
+          <small ng-show="!weekplan.assignments">No assignments this week</small>
+          <div ng-repeat="assignment in weekplan.assignments" style="word-wrap: break-word;">
+            <h5>{{assignment.title}}</h5>
+            <p ng-bind-html='assignment.description'></p>
+          </div>
+        </div>
+        <div flex pull-right style="text-align: right; align: top;">
           <md-button aria-label="Delete weekplan" ng-click="deleteWeekPlan(weekplan, $event)">
             <div style="font-size:20px; color:darkred;">
               <i class="fa fa-trash"></i>

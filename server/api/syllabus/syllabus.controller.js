@@ -28,6 +28,15 @@ function responseWithResult(res, statusCode) {
   };
 }
 
+function responseWithResultWeekplan(res, statusCode) {
+  statusCode = statusCode || 200;
+  return function(entity) {
+    if (entity) {
+      res.status(statusCode).json(entity);
+    }
+  };
+}
+
 function handleEntityNotFound(res) {
   return function(entity) {
     if (!entity) {
@@ -40,10 +49,10 @@ function handleEntityNotFound(res) {
 
 function saveUpdates(updates) {
   return function(entity) {
-    var updated = _.merge(entity, updates);
+    var updated = _.extend(entity, updates);
     return updated.saveAsync()
       .spread(updated => {
-        return updated;
+        return updated; 
       });
   };
 }
@@ -69,7 +78,16 @@ export function index(req, res) {
 // Gets a single Syllabus from the DB
 export function show(req, res) {
   Syllabus.findById(req.params.id)
-    .populate('weekplans')
+    .execAsync()
+    .then(handleEntityNotFound(res))
+    .then(responseWithResultWeekplan(res))
+    .catch(handleError(res));
+}
+
+// Gets a single Syllabus from the DB
+export function getWeekplan(req, res) {
+  Syllabus.findOne({_id: req.params.sid, 'weekplans._id': req.params.wid}, {'weekplans.$': 1})
+    .select('year iconurl title subtitle weekplans education course class lecturer academy')
     .execAsync()
     .then(handleEntityNotFound(res))
     .then(responseWithResult(res))
