@@ -14,10 +14,7 @@ var SyllabusSchema = new mongoose.Schema({
   academy: String,
   weekplans: [{
     week: Number,
-    topics: [{
-      title: String,
-      description: String
-    }],
+    topics: String,
     literature: [{
       title: String,
       url: String

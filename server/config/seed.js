@@ -74,29 +74,10 @@ Syllabus.find({}).removeAsync()
         academy: 'ErhvervsAkademi SydVest',
         weekplans: [{
           week: 4,
-          topics: [{
-            title: 'Presentation Week 5-6',
-            description: '<a href="https://prezi.com/iuuluefzvf60/week-5-6-js-web-apps-spring-2015/?utm_campaign=share&utm_medium=copy ">Prezi link</a>'
-          }, {
-            title: 'Free Bootstrap CV Resume HTML Template',
-            description: '<a href="http://bootstraptaste.com/kelly-free-bootstrap-cv-resume-html-template/">Bootstrap link</a>'
-          }],
-          literature: [{
-            title: 'Reference guide HTML',
-            url: 'http://www.tutorialspoint.com/html/index.htm'
-          }, {
-            title: 'Reference guide HTML5',
-            url: 'http://www.tutorialspoint.com/html5/index.htm'
-          }]
+          topics: '<p><span class="fr-video fr-dvb" contenteditable="false"><iframe width="640" height="360" src="//www.youtube.com/embed/1EsgeLy_xgI" frameborder="0" allowfullscreen=""></iframe></span><img class="fr-dib" src="http://i.froala.com/assets/photo8.jpg" data-id="8" data-type="image" data-name="Image 2015-12-11 at 21:12:50.jpg" style="width: 300px;"><br></p>'
         }, {
           week: 5,
-          topics: [{
-            title: 'Presentation Week 5-6',
-            description: '<a href="https://prezi.com/iuuluefzvf60/week-5-6-js-web-apps-spring-2015/?utm_campaign=share&utm_medium=copy ">Prezi link</a>'
-          }, {
-            title: 'Free Bootstrap CV Resume HTML Template',
-            description: '<a href="http://bootstraptaste.com/kelly-free-bootstrap-cv-resume-html-template/">Bootstrap link</a>'
-          }],
+          topics:  '<a href="https://prezi.com/iuuluefzvf60/week-5-6-js-web-apps-spring-2015/?utm_campaign=share&utm_medium=copy ">Prezi link</a>',
           literature: [{
             title: 'Reference guide HTML',
             url: 'http://www.tutorialspoint.com/html/index.htm'

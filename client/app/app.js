@@ -1,20 +1,21 @@
 'use strict';
 
 angular.module('virtualunitedApp', [
-  'virtualunitedApp.auth',
-  'virtualunitedApp.admin',
-  'virtualunitedApp.constants',
-  'ngCookies',
-  'ngResource',
-  'ngSanitize',
-  'btford.socket-io',
-  'ui.router',
-  'ui.bootstrap',
-  'validation.match',
-  'ngMaterial',
-  'ngVideoPreview'
-])
-  .config(function($urlRouterProvider, $locationProvider) {
+    'virtualunitedApp.auth',
+    'virtualunitedApp.admin',
+    'virtualunitedApp.constants',
+    'ngCookies',
+    'ngResource',
+    'ngSanitize',
+    'btford.socket-io',
+    'ui.router',
+    'ui.bootstrap',
+    'validation.match',
+    'ngMaterial',
+    'ngVideoPreview',
+    'summernote'
+  ])
+  .config(function($urlRouterProvider, $locationProvider, $sceDelegateProvider) {
     $urlRouterProvider
       .otherwise('/');
 

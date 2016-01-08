@@ -3,18 +3,19 @@
     <md-button aria-label="Go Back" style="color: greenyellow;" ng-click="goBack()">
       Go Back
     </md-button>
-    <span hide-sm hide-xs>{{weekplan.syllabus.course}}</span>
-    <small>{{weekplan.syllabus.class}}</small>
+    <span hide-sm hide-xs>{{syllabus.course}}</span>
+    <small>{{syllabus.class}}</small>
     </h2>
     <span flex></span>
     <h2>
-      <span hide-sm hide-xs>{{weekplan.syllabus.education}} - </span>
-      <span hide-sm hide-xs>{{weekplan.syllabus.academy}}</span>
+      <span hide-sm hide-xs>{{syllabus.education}} - </span>
+      <span hide-sm hide-xs>{{syllabus.academy}}</span>
     </h2>
   </div>
 </md-toolbar>
 
 <md-content flex-offset="10" flex="80">
+  {{$scope.weekplan}}
   <div flex-sm="100" flex-xs="100" layout="column">
     <md-card>
       <md-card-content layout="row" layout-wrap>
@@ -25,7 +26,7 @@
             </md-button>
           </div>
           <h3 style="text-align: center; margin-top:5px;">
-            Week {{weekplan.week | date : 'ww'}}
+            Week {{weekplan.week}}
           </h3>
           <div ng-show="!editPage"  style="text-align: center;">
             <md-button style="font-size:20px;" aria-label="Edit presentation" ng-click="edit()" class="md-icon-button">
@@ -49,15 +50,14 @@
             <md-tab>
               <md-tab-label>
                 <i class="fa fa-book"></i> Presentation
-                <md-badge>{{weekplan.topics ? weekplan.topics.length : 0}}</md-badge>
               </md-tab-label>
               <md-tab-body>
-                <div ng-show="!editPage">
-                  <small ng-show="!weekplan.topics || weekplan.topics.length===0">No presentation this week</small>
-                  <div ng-repeat="topic in weekplan.topics || weekplan.topics.length===0" style="word-wrap: break-word;">
-                    <h5>{{topic.title}}</h5>
-                    <p ng-bind-html='topic.description'></p>
-                  </div>
+                <div ng-show="!editPage" style="margin-top:20px;" class="bordered-box">
+                  <small ng-show="!weekplan.topics">No presentation this week</small>
+                  <div ng-bind-html="toTrusted(weekplan.topics)"></div>
+                </div>
+                <div ng-show="editPage">
+                  <div summernote style="padding:2px; border:2px dashed #e4e5e7;" config="options" contentEditable=true data-ph="Insert topics etc.." ng-model="editTopics"></div>
                 </div>
               </md-tab-body>
             </md-tab>
