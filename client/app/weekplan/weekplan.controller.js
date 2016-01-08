@@ -7,10 +7,13 @@ angular.module('virtualunitedApp')
       $scope.weekplan = syllabus.weekplans[0];
     });
     $scope.goBack = function(){
-        $state.go('syllabus', {id:$scope.weekplan.syllabus._id});
+        $state.go('syllabus', {id:$scope.syllabus._id});
     };
     $scope.edit = function(){
         $scope.editTopics = $scope.weekplan.topics;
+        $scope.editVideos = $scope.weekplan.videos;
+        $scope.editLiterature = $scope.weekplan.literature;
+        $scope.editAssignments = $scope.weekplan.assignments;
         $scope.editPage = !$scope.editPage;
 
     };
@@ -21,6 +24,9 @@ angular.module('virtualunitedApp')
 
     $scope.save = function(){
         $scope.syllabus.weekplans[0].topics = $scope.editTopics;
+        $scope.syllabus.weekplans[0].videos = $scope.editVideos;
+        $scope.syllabus.weekplans[0].literature = $scope.editLiterature;
+        $scope.syllabus.weekplans[0].assignments = $scope.editAssignments;
         Syllabus.update({ id: $scope.syllabus._id },$scope.syllabus, function(syllabus) {
           $scope.syllabus = syllabus
           $scope.weekplan = syllabus.weekplans[0];

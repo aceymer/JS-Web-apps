@@ -15,7 +15,6 @@
 </md-toolbar>
 
 <md-content flex-offset="10" flex="80">
-  {{$scope.weekplan}}
   <div flex-sm="100" flex-xs="100" layout="column">
     <md-card>
       <md-card-content layout="row" layout-wrap>
@@ -34,10 +33,10 @@
             </md-button>
           </div>
           <div ng-show="editPage"  style="text-align: center;">
-            <md-button style="font-size:20px;" aria-label="Edit presentation" ng-click="undo()" class="md-icon-button">
+            <md-button style="font-size:20px;" aria-label="Undo edit" ng-click="undo()" class="md-icon-button">
               <i class="fa fa-undo"></i>
             </md-button>
-            <md-button style="font-size:20px;" aria-label="Edit presentation" ng-click="save()" class="md-icon-button md-primary">
+            <md-button style="font-size:20px;" aria-label="Save edit" ng-click="save()" class="md-icon-button md-primary">
               <i class="fa fa-floppy-o"></i>
             </md-button>
           </div>
@@ -52,67 +51,54 @@
                 <i class="fa fa-book"></i> Presentation
               </md-tab-label>
               <md-tab-body>
-                <div ng-show="!editPage" style="margin-top:20px;" class="bordered-box">
+                <div ng-if="!editPage" style="margin-top:20px;" class="bordered-box">
                   <small ng-show="!weekplan.topics">No presentation this week</small>
                   <div ng-bind-html="toTrusted(weekplan.topics)"></div>
                 </div>
-                <div ng-show="editPage">
-                  <div summernote style="padding:2px; border:2px dashed #e4e5e7;" config="options" contentEditable=true data-ph="Insert topics etc.." ng-model="editTopics"></div>
+                <div ng-if="editPage">
+                  <div summernote style="padding:2px; border:2px dashed #e4e5e7;" config="options" contentEditable=true data-ph="Insert topics etc.." ng-model="$parent.editTopics"></div>
                 </div>
               </md-tab-body>
             </md-tab>
             <md-tab>
               <md-tab-label>
                 <i class="fa fa-book"></i> Videos
-                <md-badge>{{weekplan.videosBeforeClass || weekplan.videosOthers ? weekplan.videosBeforeClass.length + weekplan.videosOthers.length: 0}}</md-badge>
               </md-tab-label>
               <md-tab-body>
-                <div ng-show="!editPage">
-                  <h5>Videos, you should see before class</h5>
-                  <small ng-show="!weekplan.videosBeforeClass">No videos this week</small>
-                  <div ng-repeat="video in weekplan.videosBeforeClass" style="word-wrap: break-word;">
-                    <p>{{video.title}}</p>
-                    <ng-video-preview source="youtube" url="video.url"></ng-video-preview>
-                  </div>
-                  <hr>
-                  <h5>Other videos</h5>
-                  <small ng-show="!weekplan.videosOthers">No videos this week</small>
-                  <div ng-repeat="video in weekplan.videosOthers" style="word-wrap: break-word;">
-                    <p>{{video.title}}</p>
-                    <ng-video-preview source="youtube" url="video.url"></ng-video-preview>
-                  </div>
+                <div ng-if="!editPage" style="margin-top:20px;" class="bordered-box">
+                  <small ng-show="!weekplan.videos">No videos this week</small>
+                  <div ng-bind-html="toTrusted(weekplan.videos)"></div>
+                </div>
+                <div ng-if="editPage">
+                  <div summernote style="padding:2px; border:2px dashed #e4e5e7;" config="options" contentEditable=true data-ph="Insert video information etc.." ng-model="$parent.editVideos"></div>
                 </div>
               </md-tab-body>
             </md-tab>
             <md-tab>
               <md-tab-label>
                 <i class="fa fa-bookmark"></i> Literature
-                <md-badge>{{weekplan.literature ? weekplan.literature.length : 0}}</md-badge>
               </md-tab-label>
               <md-tab-body>
-                <div ng-show="!editPage">
-
-                  <small ng-show="!weekplan.literature || weekplan.literature.length===0"> No literature this week </small>
-                  <div ng-repeat="literature in weekplan.literature" style="word-wrap: break-word;">
-                    <h5>{{literature.title}}</h5>
-                    <a href="{{literature.url}}">{{literature.url}}</a>
-                  </div>
+                <div ng-if="!editPage" style="margin-top:20px;" class="bordered-box">
+                  <small ng-show="!weekplan.literature">No presentation this week</small>
+                  <div ng-bind-html="toTrusted(weekplan.literature)"></div>
+                </div>
+                <div ng-if="editPage">
+                  <div summernote style="padding:2px; border:2px dashed #e4e5e7;" config="options" contentEditable=true data-ph="Insert video information etc.." ng-model="$parent.editLiterature"></div>
                 </div>
               </md-tab-body>
             </md-tab>
             <md-tab>
               <md-tab-label>
                 <i class="fa fa-flag"></i> Assignments
-                <md-badge>{{weekplan.assignments ? weekplan.assignments.length : 0}}</md-badge>
               </md-tab-label>
               <md-tab-body>
-                <div ng-show="!editPage">
-
+                <div ng-if="!editPage" style="margin-top:20px;" class="bordered-box">
                   <small ng-show="!weekplan.assignments">No assignments this week</small>
-                  <div ng-repeat="assignment in weekplan.assignments" style="word-wrap: break-word;">
-                    <h5>{{assignment.title}}</h5>
-                    <p ng-bind-html='assignment.description'></p>
-                  </div>
+                  <div ng-bind-html="toTrusted(weekplan.assignments)"></div>
+                </div>
+                <div ng-if="editPage">
+                  <div summernote style="padding:2px; border:2px dashed #e4e5e7;" config="options" contentEditable=true data-ph="Insert video information etc.." ng-model="$parent.editAssignments"></div>
                 </div>
               </md-tab-body>
             </md-tab>

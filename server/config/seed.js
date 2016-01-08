@@ -7,7 +7,6 @@
 import Thing from '../api/thing/thing.model';
 import User from '../api/user/user.model';
 import Syllabus from '../api/syllabus/syllabus.model';
-import Weekplan from '../api/weekplan/weekplan.model';
 
 Thing.find({}).removeAsync()
   .then(() => {
