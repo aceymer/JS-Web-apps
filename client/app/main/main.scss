@@ -1,5 +1,9 @@
-.animate-if.ng-enter, .animate-if.ng-leave {
-  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+.animate-if.ng-enter {
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.8s;
+}
+
+.animate-if.ng-leave {
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.2s;
 }
 
 .animate-if.ng-enter,
@@ -15,17 +19,23 @@
 }
 
 .animate-new-course.ng-enter {
-  transition:all linear 1.6s;
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.8s;
+}
+
+.animate-new-course.ng-leave {
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.2s;
 }
 
 .animate-new-course.ng-enter,
 .animate-new-course.ng-leave.ng-leave-active {
-  opacity:0;
+  //opacity:0;
+  left:1200px;
 }
 
 .animate-new-course.ng-leave,
 .animate-new-course.ng-enter.ng-enter-active {
-  opacity:1;
+  //opacity:1;
+  left:0px;
 }
 
 .animate-repeat-course {
