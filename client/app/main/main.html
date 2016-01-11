@@ -1,26 +1,181 @@
 <navbar></navbar>
 
-<header class="hero-unit" id="banner">
+<header class="hero-unit" id="banner" style="background:rgb(63,81,181)">
   <div class="container">
-    <h1>Courses!</h1>
-    <p class="lead">Welcome</p>
-    <img src="assets/images/yeoman.png" alt="I'm Yeoman">
+    <h1>Knowledge Engine 2.0</h1>
+    <p class="lead">Welcome to the Knowledge Engine</p>
+    <img src="assets/images/tech.jpg" alt="Technologi" style="width:15%;height:15%;">
   </div>
 </header>
 
-<md-content flex-offset="25" flex="50">
+<md-content flex-offset="20" flex="60"  class="animate-if" ng-if="!addCourse && !editCourse">
+  <div flex="100">
+    <md-button aria-label="Add New" ng-click="addSyllabus($event)" class="md-raised md-primary">
+      <i class="fa fa-plus"></i> Add new Course
+    </md-button>
+  </div>
+
   <md-list>
-    <md-subheader class="md-no-sticky">Courses</md-subheader>
-    <md-list-item class="md-3-line" ng-repeat="item in syllabuses" ng-click="goToCourse(item, $event)">
+    <md-list-item ng-repeat="item in syllabuses" class="animate-repeat-course md-3-line" ng-click="goToCourse(item, $event)">
       <img ng-src="{{item.iconurl}}?{{$index}}" class="md-avatar"  />
       <div class="md-list-item-text" layout="column">
         <h3>{{ item.title }}</h3>
         <h4>{{ item.subtitle }}</h4>
         <p>{{ item.lecturer }}</p>
       </div>
+      <div pull-right style="text-align: right; align: top;">
+        <md-button style="margin-top:-15px;" class="md-secondary" aria-label="Delete syllabus" ng-click="deleteSyllabus(item, $event)">
+          <div style="font-size:20px; color:darkred;">
+            <i class="fa fa-trash"></i>
+          </div>
+        </md-button>
+        <md-button class="md-secondary" style="margin-top:20px;" aria-label="Edit syllabus" ng-click="editSyllabus(item, $event)">
+          <div style="font-size:20px;">
+            <i class="fa fa-pencil"></i>
+          </div>
+        </md-button>
+      </div>
     </md-list-item>
     <md-divider ></md-divider>
   </md-list>
 </md-content>
+
+<div flex-offset="20" flex="60" ng-if="addCourse && !editCourse" class="animate-new-course">
+<md-content layout-padding>
+    <form name="newCourseForm" novalidate>
+      <md-input-container class="md-block">
+        <label>Title</label>
+        <input md-maxlength="30" required name="title" ng-model="newSyllabus.title">
+        <div ng-messages="newCourseForm.title.$error">
+          <div ng-message="required">This is required.</div>
+          <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Subtitle</label>
+        <input md-maxlength="30" required name="subtitle" ng-model="newSyllabus.subtitle">
+        <div ng-messages="newCourseForm.subtitle.$error">
+          <div ng-message="required">This is required.</div>
+          <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Academy</label>
+        <input md-maxlength="30" required name="academy" ng-model="newSyllabus.academy">
+        <div ng-messages="newCourseForm.academy.$error">
+          <div ng-message="required">This is required.</div>
+          <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Education</label>
+        <input md-maxlength="30" required name="education" ng-model="newSyllabus.education">
+        <div ng-messages="newCourseForm.education.$error">
+          <div ng-message="required">This is required.</div>
+          <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Course name</label>
+        <input md-maxlength="30" required name="course" ng-model="newSyllabus.course">
+        <div ng-messages="newCourseForm.course.$error">
+          <div ng-message="required">This is required.</div>
+          <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Class</label>
+        <input md-maxlength="30" required name="class" ng-model="newSyllabus.class">
+        <div ng-messages="newCourseForm.class.$error">
+          <div ng-message="required">This is required.</div>
+          <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Lecturer</label>
+        <input md-maxlength="30" required name="lecturer" ng-model="newSyllabus.lecturer">
+        <div ng-messages="newCourseForm.lecturer.$error">
+          <div ng-message="required">This is required.</div>
+          <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Icon url</label>
+        <input name="iconurl" ng-model="newSyllabus.iconurl">
+      </md-input-container>
+    </form>
+  </md-content>
+  <div flex="100" style="text-align: right;">
+    <md-button aria-label="Create course" ng-click="createSyllabus(newCourseForm)"  class="md-raised md-primary">
+      <i class="fa fa-plus"></i> Create Course
+    </md-button>
+    <md-button aria-label="Undo changes" ng-click="undoSyllabus($event)" class="md-raised md-warning">
+      <i class="fa fa-undo"></i> Cancel
+    </md-button>
+  </div>
+</div>
+
+<div flex-offset="20" flex="60" ng-if="!addCourse && editCourse" >
+
+  <md-content layout-padding>
+    <form name="newCourseForm">
+      <md-input-container class="md-block">
+        <label>Description</label>
+        <input md-maxlength="30" required name="description" ng-model="project.description">
+        <div ng-messages="projectForm.description.$error">
+          <div ng-message="required">This is required.</div>
+          <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Client Name</label>
+        <input required name="clientName" ng-model="project.clientName">
+        <div ng-messages="projectForm.clientName.$error">
+          <div ng-message="required">This is required.</div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Client Email</label>
+        <input required type="email" name="clientEmail" ng-model="project.clientEmail"
+               minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+        <div ng-messages="projectForm.clientEmail.$error" role="alert">
+          <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+            Your email must be between 10 and 100 characters long and look like an e-mail address.
+          </div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Hourly Rate (USD)</label>
+        <input required type="number" step="any" name="rate" ng-model="project.rate" min="800"
+               max="4999" ng-pattern="/^1234$/" />
+        <div ng-messages="projectForm.rate.$error" multiple md-auto-hide="false">
+          <div ng-message="required">
+            You've got to charge something! You can't just <b>give away</b> a Missile Defense
+            System.
+          </div>
+          <div ng-message="min">
+            You should charge at least $800 an hour. This job is a big deal... if you mess up,
+            everyone dies!
+          </div>
+          <div ng-message="pattern">
+            You should charge exactly $1,234.
+          </div>
+          <div ng-message="max">
+            {{projectForm.rate.$viewValue | currency:"$":0}} an hour? That's a little ridiculous. I
+            doubt event Bill Clinton could afford that.
+          </div>
+        </div>
+      </md-input-container>
+    </form>
+  </md-content>
+  <div flex="100" style="text-align: right;">
+    <md-button aria-label="Save changes" ng-click="saveSyllabus($event)" class="md-raised md-primary">
+      <i class="fa fa-floppy-o"></i> Save changes
+    </md-button>
+    <md-button aria-label="Undo changes" ng-click="undoSyllabus($event)" class="md-raised md-warning">
+      <i class="fa fa-undo"></i> Cancel
+    </md-button>
+  </div>
+</div>
 
 <footer></footer>

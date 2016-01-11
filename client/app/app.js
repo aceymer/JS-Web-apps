@@ -13,7 +13,8 @@ angular.module('virtualunitedApp', [
     'validation.match',
     'ngMaterial',
     'ngVideoPreview',
-    'summernote'
+    'summernote',
+    'ngAnimate'
   ])
   .config(function($urlRouterProvider, $locationProvider, $sceDelegateProvider) {
     $urlRouterProvider
