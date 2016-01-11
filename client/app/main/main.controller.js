@@ -25,13 +25,11 @@
             $scope.addCourse = false;
             $scope.editCourse = false;
           });
-
-
-
         }
       }
 
       $scope.addSyllabus = function(courseForm) {
+        $scope.newSyllabus = {};
         $scope.addCourse = true;
         $scope.editCourse = false;
       }
@@ -39,13 +37,24 @@
       $scope.saveSyllabus = function() {
         $scope.addCourse = false;
         $scope.editCourse = false;
-
+        Syllabus.update({ id: $scope.newSyllabus._id },$scope.newSyllabus, function(syllabus) {
+          var toast = $mdToast.simple()
+            .textContent('Syllabus updated')
+            .action('OK')
+            .highlightAction(false)
+            .position('top');
+          $mdToast.show(toast);
+        });
       }
-      $scope.editSyllabus = function() {
+
+      $scope.editSyllabus = function(syllabus) {
+        $scope.newSyllabus = syllabus;
         $scope.addCourse = false;
         $scope.editCourse = true;
       }
+
       $scope.undoSyllabus = function() {
+        $scope.newSyllabus = {};
         $scope.addCourse = false;
         $scope.editCourse = false;
       }
