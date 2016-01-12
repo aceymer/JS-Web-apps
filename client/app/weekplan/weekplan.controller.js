@@ -14,6 +14,7 @@ angular.module('virtualunitedApp')
         $scope.editVideos = $scope.weekplan.videos;
         $scope.editLiterature = $scope.weekplan.literature;
         $scope.editAssignments = $scope.weekplan.assignments;
+        $scope.editSummary = $scope.weekplan.summary;
         $scope.editPage = !$scope.editPage;
 
     };
@@ -23,21 +24,22 @@ angular.module('virtualunitedApp')
     };
 
     $scope.save = function(){
-        $scope.syllabus.weekplans[0].topics = $scope.editTopics;
-        $scope.syllabus.weekplans[0].videos = $scope.editVideos;
-        $scope.syllabus.weekplans[0].literature = $scope.editLiterature;
-        $scope.syllabus.weekplans[0].assignments = $scope.editAssignments;
-        Syllabus.update({ id: $scope.syllabus._id },$scope.syllabus, function(syllabus) {
-          $scope.syllabus = syllabus
-          $scope.weekplan = syllabus.weekplans[0];
+        $scope.weekplan.topics = $scope.editTopics;
+        $scope.weekplan.videos = $scope.editVideos;
+        $scope.weekplan.literature = $scope.editLiterature;
+        $scope.weekplan.assignments = $scope.editAssignments;
+        $scope.weekplan.summary = $scope.editSummary;
+        Syllabus.updateWeekplan({ id: $scope.syllabus._id, wid: $scope.weekplan._id },$scope.weekplan, function(weekplan) {
           var toast = $mdToast.simple()
             .textContent('Weekplan updated')
             .action('OK')
             .highlightAction(false)
             .position('top');
           $mdToast.show(toast);
+          $scope.editPage = !$scope.editPage;
+
         });
-        $scope.editPage = !$scope.editPage;
+
     };
 
     $scope.toTrusted = function(html_code) {

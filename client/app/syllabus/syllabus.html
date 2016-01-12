@@ -57,39 +57,13 @@
           </div>
         </div>
         <div flex="20" flex-sm="90" flex-xs="90">
-          <h4><i class="fa fa-book"></i> Presentation</h4>
-          <small ng-show="!weekplan.topics || weekplan.topics.length===0">No presentation this week</small>
-          <div ng-repeat="topic in weekplan.topics" style="word-wrap: break-word;">
-            <h5>{{topic.title}}</h5>
-            <p ng-bind-html='topic.description'></p>
+          <h4><i class="fa fa-comment-o"></i> Week summary</h4>
+          <small ng-show="!weekplan.topics">---</small>
+          <div style="word-wrap: break-word;">
+            <div ng-bind-html="toTrusted(weekplan.topics)"></div>
           </div>
         </div>
-        <div flex="20" flex-sm="90" flex-xs="90">
-          <h4><i class="fa fa-book"></i> Videos</h4>
-          <small ng-show="!weekplan.videosBeforeClass && !weekplan.videosOthers">No videos this week</small>
-          <div ng-repeat="video in weekplan.videosBeforeClass" style="word-wrap: break-word;">
-            <h5>{{video.title}}</h5>
-          </div>
-          <div ng-repeat="video in weekplan.videosOthers" style="word-wrap: break-word;">
-            <h5>{{video.title}}</h5>
-          </div>
-        </div>
-        <div flex="20" flex-sm="90" flex-xs="90">
-          <h4><i class="fa fa-bookmark"></i> Literature</h4>
-          <small ng-show="!weekplan.literature || weekplan.literature.length===0">No literature this week</small>
-          <div ng-repeat="literature in weekplan.literature" style="word-wrap: break-word;">
-            <h5>{{literature.title}}</h5>
-            <a href="{{literature.url}}">{{literature.url}}</a>
-          </div>
-        </div>
-        <div flex="20" flex-sm="90" flex-xs="90">
-          <h4><i class="fa fa-flag"></i> Assignments</h4>
-          <small ng-show="!weekplan.assignments">No assignments this week</small>
-          <div ng-repeat="assignment in weekplan.assignments" style="word-wrap: break-word;">
-            <h5>{{assignment.title}}</h5>
-            <p ng-bind-html='assignment.description'></p>
-          </div>
-        </div>
+
         <div flex pull-right style="text-align: right; align: top;">
           <md-button aria-label="Delete weekplan" ng-click="deleteWeekPlan(weekplan, $event)">
             <div style="font-size:20px; color:darkred;">

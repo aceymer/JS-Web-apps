@@ -77,13 +77,7 @@ Syllabus.find({}).removeAsync()
         }, {
           week: 5,
           topics:  '<a href="https://prezi.com/iuuluefzvf60/week-5-6-js-web-apps-spring-2015/?utm_campaign=share&utm_medium=copy ">Prezi link</a>',
-          literature: [{
-            title: 'Reference guide HTML',
-            url: 'http://www.tutorialspoint.com/html/index.htm'
-          }, {
-            title: 'Reference guide HTML5',
-            url: 'http://www.tutorialspoint.com/html5/index.htm'
-          }]
+          literature: '<p><span class="fr-video fr-dvb" contenteditable="false"><iframe width="640" height="360" src="//www.youtube.com/embed/1EsgeLy_xgI" frameborder="0" allowfullscreen=""></iframe></span><img class="fr-dib" src="http://i.froala.com/assets/photo8.jpg" data-id="8" data-type="image" data-name="Image 2015-12-11 at 21:12:50.jpg" style="width: 300px;"><br></p>'
         }],
         year: 2015
       })

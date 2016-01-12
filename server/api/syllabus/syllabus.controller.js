@@ -52,7 +52,7 @@ function saveUpdates(updates) {
     var updated = _.extend(entity, updates);
     return updated.saveAsync()
       .spread(updated => {
-        return updated; 
+        return updated;
       });
   };
 }
@@ -84,10 +84,30 @@ export function show(req, res) {
     .catch(handleError(res));
 }
 
-// Gets a single Syllabus from the DB
+// Gets a single weekplan from the DB
 export function getWeekplan(req, res) {
   Syllabus.findOne({_id: req.params.sid, 'weekplans._id': req.params.wid}, {'weekplans.$': 1})
     .select('year iconurl title subtitle weekplans education course class lecturer academy')
+    .execAsync()
+    .then(handleEntityNotFound(res))
+    .then(responseWithResult(res))
+    .catch(handleError(res));
+}
+
+// Updates a single weekplan in the DB
+export function updateWeekplan(req, res) {
+  if (req.body._id) {
+    delete req.body._id;
+  }
+
+  Syllabus.findOneAndUpdate({'weekplans._id': req.params.wid }, {'$set': {
+      'weekplans.$.week': req.body.week,
+      'weekplans.$.summary': req.body.summary,
+      'weekplans.$.topics': req.body.topics,
+      'weekplans.$.literature': req.body.literature,
+      'weekplans.$.videos': req.body.videos,
+      'weekplans.$.assignments': req.body.assignments
+    }})
     .execAsync()
     .then(handleEntityNotFound(res))
     .then(responseWithResult(res))

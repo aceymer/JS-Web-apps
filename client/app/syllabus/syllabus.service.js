@@ -13,6 +13,9 @@ angular.module('virtualunitedApp')
         },
         update: {
           method:'PUT'
+        },
+        updateWeekplan: {
+          method:'PUT'
         }
       }); // Note the full endpoint address
 });
