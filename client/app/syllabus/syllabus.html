@@ -1,16 +1,28 @@
 <navbar></navbar>
 
-<md-content flex-offset="5" flex="90">
-  <md-list-item class="md-3-line">
-    <div hide-sm hide-xs><img ng-src="{{syllabus.iconurl}}" alt="MEAN" style="width:160px; height: auto; margin-right:20px;margin-top:10px;"></div>
-    <div flex-sm="100" flex-xs="100" class="md-list-item-text" layout="column">
-      <h2>{{ syllabus.title }}</h2>
-      <h3>{{ syllabus.subtitle }}</h3>
-      <h4>Lecturer: {{ syllabus.lecturer }}</h4>
+<md-content flex-offset="5" flex="90" >
+  <div flex-sm="100" flex-xs="100" layout="row">
+    <div flex="5" >
+      <md-button class="md-fab md-mini md-primary" aria-label="Go Back" ng-click="goBack()">
+        <i class="fa fa-arrow-left"></i>
+      </md-button>
     </div>
-  </md-list-item>
-  <hr>
 
+    <div flex>
+      <md-list-item class="md-3-line">
+        <div hide-sm hide-xs><img ng-src="{{syllabus.iconurl}}" alt="MEAN" style="width:160px; height: auto; margin-right:20px;margin-top:10px;"></div>
+        <div flex-sm="100" flex-xs="100" class="md-list-item-text" layout="column">
+          <h2>{{ syllabus.title }}</h2>
+          <h3>{{ syllabus.subtitle }}</h3>
+          <h4>Lecturer: {{ syllabus.lecturer }}</h4>
+        </div>
+      </md-list-item>
+    </div>
+  </div>
+  <hr>
+</md-content>
+
+<md-content flex-offset="5" flex="90">
   <div ng-if="isAdmin()" flex="100">
     <form name="weekplanForm">
       <md-input-container style="margin-right: 10px;">
@@ -42,7 +54,7 @@
           </div>
         </div>
         <div flex>
-          <h4><i class="fa fa-comment-o"></i> Week summary</h4>
+          <h4><i class="fa fa-comment-o"></i> Week topics</h4>
           <div style="margin-top:20px;" class="bordered-box">
             <small ng-show="!weekplan.topics">No information yet this week, please come back later...</small>
             <div ng-bind-html="toTrusted(weekplan.topics)"></div>

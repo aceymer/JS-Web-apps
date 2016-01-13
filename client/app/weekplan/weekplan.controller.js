@@ -9,7 +9,7 @@ angular.module('virtualunitedApp')
       $scope.weekplan = syllabus.weekplans[0];
     });
     $scope.goBack = function(){
-        $state.go('syllabus', {id:$scope.syllabus._id});
+      window.history.back();
     };
     $scope.edit = function(){
         $scope.editTopics = $scope.weekplan.topics;

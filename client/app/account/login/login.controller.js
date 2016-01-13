@@ -7,9 +7,12 @@ class LoginController {
   submitted = false;
   //end-non-standard
 
-  constructor(Auth, $state) {
+  constructor(Auth, $state, $scope) {
     this.Auth = Auth;
     this.$state = $state;
+    $scope.goBack = function(){
+      window.history.back();
+    };
   }
 
   login(form) {

@@ -1,6 +1,23 @@
 <navbar></navbar>
 
+<md-content flex-offset="5" flex="90" >
+  <div flex-sm="100" flex-xs="100" layout="row">
+    <div flex="5" >
+      <md-button class="md-fab md-mini md-primary" aria-label="Go Back" ng-click="goBack()">
+        <i class="fa fa-arrow-left"></i>
+      </md-button>
+    </div>
+
+    <div flex>
+      <md-list-item >
+        <p style="font-size:20px; text-align:center"><img ng-src="{{syllabus.iconurl}}" alt="MEAN" style="width:40px; height: auto; "> {{ syllabus.title }}, {{ syllabus.subtitle }}, Lecturer: {{ syllabus.lecturer }}</p>
+      </md-list-item>
+    </div>
+  </div>
+</md-content>
+
 <md-content flex-offset="10" flex="80">
+  <hr>
   <div flex-sm="100" flex-xs="100" layout="column">
     <md-card>
       <md-card-content layout="row" layout-wrap>

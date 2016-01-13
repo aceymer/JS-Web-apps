@@ -21,12 +21,12 @@ angular.module('virtualunitedApp')
           $state.go('main');
         }
       })
-      .state('signup', {
+      /*.state('signup', {
         url: '/signup',
         templateUrl: 'app/account/signup/signup.html',
         controller: 'SignupController',
         controllerAs: 'vm'
-      })
+      })*/
       .state('settings', {
         url: '/settings',
         templateUrl: 'app/account/settings/settings.html',

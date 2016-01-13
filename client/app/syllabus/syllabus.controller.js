@@ -10,8 +10,8 @@ angular.module('virtualunitedApp')
       $scope.syllabus = syllabus;
       setWeekNums();
     });
-    $scope.goBack = function() {
-      $state.go('main');
+    $scope.goBack = function(){
+      window.history.back();
     };
     $scope.goToWeekPlan = function(weekplan, event) {
       $state.go('weekplan', {
