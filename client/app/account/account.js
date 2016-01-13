@@ -18,7 +18,7 @@ angular.module('virtualunitedApp')
                           $state.current.referrer ||
                           'main';
           Auth.logout();
-          $state.go(referrer);
+          $state.go('main');
         }
       })
       .state('signup', {

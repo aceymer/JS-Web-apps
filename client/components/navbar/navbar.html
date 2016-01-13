@@ -1,8 +1,11 @@
-<md-toolbar class="md-theme-light" ng-controller="NavbarController" style="background-color:#9C9C9C">
+<md-toolbar class="md-theme-light" ng-controller="NavbarController" style="background-color:#27359A">
   <div class="md-toolbar-tools">
     <h2>
       <span>Knowledge Engine 2.0</span>
     </h2>
+    <md-button ui-sref="main">
+      Home
+    </md-button>
     <md-button ng-show="nav.isAdmin()" aria-label="Admin" ui-sref="admin">
       Admin
     </md-button>

@@ -1,23 +1,8 @@
-<md-toolbar class="md-theme-light">
-  <div class="md-toolbar-tools">
-    <md-button aria-label="Go Back" style="color: greenyellow;" ng-click="goBack()">
-      Go Back
-    </md-button>
-    <h2>
-      <span hide-sm hide-xs>{{syllabus.course}}</span>
-      <small>{{syllabus.class}}</small>
-    </h2>
-    <span flex></span>
-    <h2>
-      <span hide-sm hide-xs>{{syllabus.education}} - </span>
-      <span hide-sm hide-xs>{{syllabus.academy}}</span>
-    </h2>
-  </div>
-</md-toolbar>
+<navbar></navbar>
 
 <md-content flex-offset="5" flex="90">
   <md-list-item class="md-3-line">
-    <div hide-sm hide-xs><img ng-src="{{syllabus.iconurl}}" alt="MEAN" style="width:220px; height: auto; margin-right:20px;margin-top:10px;"></div>
+    <div hide-sm hide-xs><img ng-src="{{syllabus.iconurl}}" alt="MEAN" style="width:160px; height: auto; margin-right:20px;margin-top:10px;"></div>
     <div flex-sm="100" flex-xs="100" class="md-list-item-text" layout="column">
       <h2>{{ syllabus.title }}</h2>
       <h3>{{ syllabus.subtitle }}</h3>
