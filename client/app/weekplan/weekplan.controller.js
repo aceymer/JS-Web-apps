@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('virtualunitedApp')
-  .controller('WeekplanCtrl', function ($scope, $state, $stateParams, $sce, $mdToast,Syllabus) {
+  .controller('WeekplanCtrl', function ($scope, $state, $stateParams, $sce, $mdToast, Syllabus, Auth) {
+    $scope.isAdmin = Auth.isAdmin;
+
     Syllabus.getWeekplan({ id: $stateParams.sid, wid: $stateParams.wid }, function(syllabus){
       $scope.syllabus = syllabus;
       $scope.weekplan = syllabus.weekplans[0];

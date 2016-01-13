@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('virtualunitedApp')
-  .controller('SyllabusCtrl', function($scope, $state, $stateParams, $mdDialog, $mdMedia, $mdToast, $sce, Syllabus) {
+  .controller('SyllabusCtrl', function($scope, $state, $stateParams, $mdDialog, $mdMedia, $mdToast, $sce, Syllabus, Auth) {
+    $scope.isAdmin = Auth.isAdmin;
+
     Syllabus.getAll({
       id: $stateParams.id
     }, function(syllabus) {

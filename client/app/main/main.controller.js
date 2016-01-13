@@ -3,7 +3,9 @@
 (function() {
 
   angular.module('virtualunitedApp')
-    .controller('MainController', function($scope, $state, $stateParams, $mdToast, $mdDialog, socket, Syllabus) {
+    .controller('MainController', function($scope, $state, $stateParams, $mdToast, $mdDialog, socket, Syllabus, Auth) {
+      $scope.isAdmin = Auth.isAdmin;
+
       $scope.syllabuses = Syllabus.query();
       $scope.newSyllabus = {};
       $scope.goToCourse = function(syllabus, event) {
