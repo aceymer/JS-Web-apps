@@ -31,7 +31,7 @@ angular.module('virtualunitedApp')
         $scope.weekplan.literature = $scope.editLiterature;
         $scope.weekplan.assignments = $scope.editAssignments;
         $scope.weekplan.summary = $scope.editSummary;
-        Syllabus.updateWeekplan({ id: $scope.syllabus._id, wid: $scope.weekplan._id },$scope.weekplan, function(weekplan) {
+        Syllabus.updateWeekplan({ id: $scope.syllabus._id, wid: $scope.weekplan._id },$scope.weekplan, function() {
           var toast = $mdToast.simple()
             .textContent('Weekplan updated')
             .action('OK')
@@ -44,9 +44,9 @@ angular.module('virtualunitedApp')
 
     };
 
-    $scope.toTrusted = function(html_code) {
-      return $sce.trustAsHtml(html_code);
-    }
+    $scope.toTrusted = function(htmlCode) {
+      return $sce.trustAsHtml(htmlCode);
+    };
 
     $scope.anotherGoodOne = 'https://www.youtube.com/watch?v=18-xvIjH8T4';
 

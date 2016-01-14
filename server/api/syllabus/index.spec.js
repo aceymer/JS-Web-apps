@@ -5,8 +5,10 @@ var proxyquire = require('proxyquire').noPreserveCache();
 var syllabusCtrlStub = {
   index: 'syllabusCtrl.index',
   show: 'syllabusCtrl.show',
+  getWeekplan: 'syllabusCtrl.getWeekplan',
   create: 'syllabusCtrl.create',
   update: 'syllabusCtrl.update',
+  updateWeekplan: 'syllabusCtrl.updateWeekplan',
   destroy: 'syllabusCtrl.destroy'
 };
 
@@ -29,7 +31,6 @@ var syllabusIndex = proxyquire('./index.js', {
 });
 
 describe('Syllabus API Router:', function() {
-
   it('should return an express router instance', function() {
     syllabusIndex.should.equal(routerStub);
   });
@@ -54,6 +55,16 @@ describe('Syllabus API Router:', function() {
 
   });
 
+  describe('GET /api/syllabuses/:sid/:wid', function() {
+
+    it('should route to syllabus.controller.getWeekplan', function() {
+      routerStub.get
+        .withArgs('/:sid/:wid', 'syllabusCtrl.getWeekplan')
+        .should.have.been.calledOnce;
+    });
+
+  });
+
   describe('POST /api/syllabuses', function() {
 
     it('should route to syllabus.controller.create', function() {
@@ -72,6 +83,14 @@ describe('Syllabus API Router:', function() {
         .should.have.been.calledOnce;
     });
 
+  });
+
+  describe('PUT /api/syllabuses/:sid/:wid', function() {
+    it('should route to syllabus.controller.updateWeekplan', function() {
+      routerStub.put
+        .withArgs('/:sid/:wid', 'syllabusCtrl.updateWeekplan')
+        .should.have.been.calledOnce;
+    });
   });
 
   describe('PATCH /api/syllabuses/:id', function() {

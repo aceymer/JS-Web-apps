@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('virtualunitedApp')
   .factory('Syllabus', function($resource) {
     return $resource('/api/syllabuses/:id/:wid',{

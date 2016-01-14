@@ -164,7 +164,7 @@ module.exports = function (grunt) {
           dot: true,
           src: [
             '.tmp',
-            '<%= yeoman.dist %>/!(.git*|.openshift|Procfile)**'
+            '<%= yeoman.dist %>/!(.git*|.openshift|.npmrc|Procfile)**'
           ]
         }]
       },
@@ -251,8 +251,7 @@ module.exports = function (grunt) {
       dist: {
         src: [
           '<%= yeoman.dist %>/<%= yeoman.client %>/!(bower_components){,*/}*.{js,css}',
-          '<%= yeoman.dist %>/<%= yeoman.client %>/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-          '<%= yeoman.dist %>/<%= yeoman.client %>/assets/fonts/*'
+          '<%= yeoman.dist %>/<%= yeoman.client %>/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       }
     },
@@ -393,7 +392,21 @@ module.exports = function (grunt) {
             'package.json',
             '<%= yeoman.server %>/**/*'
           ]
-        }]
+        },{
+            // include font-awesome webfonts
+            expand: true,
+            dot: true,
+            cwd: '<%= yeoman.client %>/bower_components/font-awesome',
+            src: ['fonts/*.*'],
+            dest: '<%= yeoman.dist %>/client/assets'
+          },{
+            // include bootstrap webfonts
+            expand: true,
+            dot: true,
+            cwd: '<%= yeoman.client %>/bower_components/bootstrap/dist',
+            src: ['fonts/*.*'],
+            dest: '<%= yeoman.dist %>/client/assets'
+          }]
       },
       styles: {
         expand: true,

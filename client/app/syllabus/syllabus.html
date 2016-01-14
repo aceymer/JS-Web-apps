@@ -37,6 +37,15 @@
   </div>
 
   <div flex-sm="100" flex-xs="100" layout="column">
+    <md-list>
+      <md-subheader class="md-no-sticky">{{ syllabus.title }}, {{ syllabus.subtitle }}</md-subheader>
+      <md-list-item ng-click="goToWeekPlan(weekplan, $event)" ng-repeat="weekplan in syllabus.weekplans | orderBy : '-week'">
+        <i class="fa fa-calendar" ></i>
+        <p> Week {{weekplan.week}} </p>
+        <p>{{weekplan.teaser}}</p>
+        <md-switch class="md-secondary" ng-model="setting.enabled"></md-switch>
+      </md-list-item>
+    </md-list>
     <md-card ng-repeat="weekplan in syllabus.weekplans | orderBy : '-week'">
       <md-card-content layout="row" layout-wrap>
         <div flex="15">

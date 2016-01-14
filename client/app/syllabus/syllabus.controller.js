@@ -13,7 +13,7 @@ angular.module('virtualunitedApp')
     $scope.goBack = function(){
       window.history.back();
     };
-    $scope.goToWeekPlan = function(weekplan, event) {
+    $scope.goToWeekPlan = function(weekplan) {
       $state.go('weekplan', {
         sid: $scope.syllabus._id,
         wid: weekplan._id
@@ -28,7 +28,7 @@ angular.module('virtualunitedApp')
       Syllabus.update({
         id: $scope.syllabus._id
       }, $scope.syllabus, function(syllabus) {
-        $scope.syllabus = syllabus
+        $scope.syllabus = syllabus;
         setWeekNums();
         var toast = $mdToast.simple()
           .textContent('Weekplan created')
@@ -40,7 +40,7 @@ angular.module('virtualunitedApp')
     };
 
     var setWeekNums = function() {
-      var startDate = moment("01-01-" + $scope.syllabus.year, "MM-DD-YYYY");
+      var startDate = moment('01-01-' + $scope.syllabus.year, 'MM-DD-YYYY');
       $scope.weeks = [];
       var weeksInYear = startDate.isoWeeksInYear();
 
@@ -55,9 +55,9 @@ angular.module('virtualunitedApp')
       $scope.newWeek = moment().week();
     };
 
-    $scope.toTrusted = function(html_code) {
-      return $sce.trustAsHtml(html_code);
-    }
+    $scope.toTrusted = function(htmlCode) {
+      return $sce.trustAsHtml(htmlCode);
+    };
 
     $scope.deleteWeekPlan = function(weekplan, event) {
       var confirm = $mdDialog.confirm()
@@ -69,7 +69,7 @@ angular.module('virtualunitedApp')
         .ok('Please do it!')
         .cancel('No I changed my mind');
       $mdDialog.show(confirm).then(function() {
-        var newValue = _.remove($scope.syllabus.weekplans, function(plan) {
+        _.remove($scope.syllabus.weekplans, function(plan) {
           return plan._id === weekplan._id;
         });
 

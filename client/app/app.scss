@@ -1,12 +1,13 @@
-$icon-font-path: "../bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
+$icon-font-path: "../assets/fonts/";
 @import '../bower_components/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap';
 @import '../bower_components/bootstrap-social/bootstrap-social.scss';
-$fa-font-path: "../bower_components/font-awesome/fonts";
+$fa-font-path: "../assets/fonts";
 @import '../bower_components/font-awesome/scss/font-awesome';
 
 /**
- * App-wide Styles
+ * App-wide Styles new
  */
+
 
 .browserupgrade {
   margin: 0.2em 0;

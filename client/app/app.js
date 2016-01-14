@@ -16,7 +16,7 @@ angular.module('virtualunitedApp', [
     'summernote',
     'ngAnimate'
   ])
-  .config(function($urlRouterProvider, $locationProvider, $sceDelegateProvider) {
+  .config(function($urlRouterProvider, $locationProvider) {
     $urlRouterProvider
       .otherwise('/');
 

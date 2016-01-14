@@ -18,7 +18,8 @@ var SyllabusSchema = new mongoose.Schema({
     topics: String,
     literature: String,
     videos: String,
-    assignments: String
+    assignments: String,
+    teaser: String
   }],
   year: Number
 });
