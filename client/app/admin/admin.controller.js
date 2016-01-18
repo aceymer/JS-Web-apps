@@ -37,7 +37,8 @@
           Auth.createUser({
             name: $scope.newUser.name,
             email: $scope.newUser.email,
-            password: '123qwe'
+            password: '123qwe',
+            role: 'admin'
           })
           .then(() => {
             var toast = $mdToast.simple()
