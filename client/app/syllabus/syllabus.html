@@ -39,46 +39,52 @@
   <div flex-sm="100" flex-xs="100" layout="column">
     <md-list>
       <md-subheader class="md-no-sticky">{{ syllabus.title }}, {{ syllabus.subtitle }}</md-subheader>
+      <md-list-item  ng-if="isAdmin()">
+        <md-input-container flex="10" class="md-block">
+          <label>Week</label>
+          <input ng-model="newWeek.week">
+        </md-input-container>
+        <md-input-container flex="70"  class="md-block">
+          <label>Theme</label>
+          <input ng-model="newWeek.theme">
+        </md-input-container>
+        <md-button flex="20" pull-left class="md-secondary" ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
+          <i class="fa fa-plus"></i> Add
+        </md-button>
+        <md-divider></md-divider>
+      </md-list-item>
       <md-list-item ng-click="goToWeekPlan(weekplan, $event)" ng-repeat="weekplan in syllabus.weekplans | orderBy : '-week'">
-        <i class="fa fa-calendar" ></i>
-        <p> Week {{weekplan.week}} </p>
-        <p>{{weekplan.teaser}}</p>
-        <md-switch class="md-secondary" ng-model="setting.enabled"></md-switch>
+        <p flex="10"><i class="fa fa-calendar" ></i>  Week {{weekplan.week}} </p>
+        <p flex pull-right>{{weekplan.teaser}}</p>
+        <div ng-if="isAdmin()" flex="15">
+          <md-menu class="md-secondary" >
+             <!-- Trigger element is a md-button with an icon -->
+             <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
+               <i class="fa fa-bars"></i>
+             </md-button>
+             <md-menu-content>
+               <md-menu-item>
+
+                 <md-button aria-label="Enable link weekplan" class="md-secondary" ng-click="enableWeekPlanLink(weekplan, $event)">
+                   <div style="color:darkgreen;">
+                     <i class="fa fa-link"></i> Enable
+                   </div>
+                 </md-button>
+               </md-menu-item>
+               <md-menu-item>
+                 <md-button aria-label="Delete weekplan" class="md-secondary" ng-click="deleteWeekPlan(weekplan, $event)">
+                   <div style="color:darkred;">
+                     <i class="fa fa-trash"></i> Delete
+                   </div>
+                 </md-button>
+               </md-menu-item>
+             </md-menu-content>
+          </md-menu>
+
+        </div>
+        <md-divider></md-divider>
       </md-list-item>
     </md-list>
-    <md-card ng-repeat="weekplan in syllabus.weekplans | orderBy : '-week'">
-      <md-card-content layout="row" layout-wrap>
-        <div flex="15">
-          <div style="text-align: center;">
-            <md-button aria-label="Show week" class="md-fab md-primary"  ng-click="goToWeekPlan(weekplan, $event)">
-              <div style="font-size:24px;">
-                <i class="fa fa-calendar" ></i>
-                </div>
-            </md-button>
-          </div>
-          <div style="text-align: center;">
-            <md-button class="md-raised" aria-label="Show week" ng-click="goToWeekPlan(weekplan, $event)">
-              Week {{weekplan.week}}
-            </md-button>
-          </div>
-        </div>
-        <div flex>
-          <h4><i class="fa fa-comment-o"></i> Week topics</h4>
-          <div style="margin-top:20px;" class="bordered-box">
-            <small ng-show="!weekplan.topics">No information yet this week, please come back later...</small>
-            <div ng-bind-html="toTrusted(weekplan.topics)"></div>
-          </div>
-        </div>
-
-        <div ng-if="isAdmin()" flex="10" pull-right style="text-align: right; align: top;">
-          <md-button aria-label="Delete weekplan" ng-click="deleteWeekPlan(weekplan, $event)">
-            <div style="font-size:20px; color:darkred;">
-              <i class="fa fa-trash"></i>
-            </div>
-          </md-button>
-        </div>
-      </md-card-content>
-    </md-card>
 </div>
 {{$scope.status}}
 </md-content>

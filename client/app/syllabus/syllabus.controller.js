@@ -1,16 +1,17 @@
 'use strict';
 
 angular.module('virtualunitedApp')
-  .controller('SyllabusCtrl', function($scope, $state, $stateParams, $mdDialog, $mdMedia, $mdToast, $sce, Syllabus, Auth) {
+  .controller('SyllabusCtrl', function($scope, $state, $stateParams, $mdDialog, $mdMedia, $mdToast, $sce, syllabus, Auth) {
     $scope.isAdmin = Auth.isAdmin;
 
-    Syllabus.getAll({
-      id: $stateParams.id
-    }, function(syllabus) {
+    var initData = function(syllabus) {
+      console.log(syllabus);
+
       $scope.syllabus = syllabus;
       setWeekNums();
-    });
-    $scope.goBack = function(){
+    };
+
+    $scope.goBack = function() {
       window.history.back();
     };
     $scope.goToWeekPlan = function(weekplan) {
@@ -87,4 +88,8 @@ angular.module('virtualunitedApp')
         });
       });
     };
+
+    initData(syllabus);
+
+
   });

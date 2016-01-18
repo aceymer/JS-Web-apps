@@ -7,6 +7,11 @@ angular.module('virtualunitedApp')
         url: '/',
         templateUrl: 'app/main/main.html',
         controller: 'MainController',
-        controllerAs: 'main'
+        controllerAs: 'main',
+        resolve: {
+          syllabuses: function(Syllabus) {
+            return Syllabus.query().$promise;
+          }
+        }
       });
   });

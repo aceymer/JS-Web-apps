@@ -3,10 +3,13 @@
 (function() {
 
   angular.module('virtualunitedApp')
-    .controller('MainController', function($scope, $state, $stateParams, $mdToast, $mdDialog, socket, Syllabus, Auth) {
+    .controller('MainController', function($scope, $state, $stateParams, $mdToast, $mdDialog, socket, syllabuses, Auth) {
       $scope.isAdmin = Auth.isAdmin;
 
-      $scope.syllabuses = Syllabus.query();
+      var initData = function(syllabuses){
+        $scope.syllabuses = syllabuses;
+      };
+
       $scope.newSyllabus = {};
       $scope.goToCourse = function(syllabus) {
         $state.go('syllabus', {
@@ -96,5 +99,7 @@
 
         });
       };
+
+      initData(syllabuses);
     });
 })();

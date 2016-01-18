@@ -6,6 +6,13 @@ angular.module('virtualunitedApp')
       .state('syllabus', {
         url: '/syllabus/:id',
         templateUrl: 'app/syllabus/syllabus.html',
-        controller: 'SyllabusCtrl'
+        controller: 'SyllabusCtrl',
+        resolve: {
+          syllabus: function($stateParams, Syllabus) {
+            return Syllabus.getAll({
+              id: $stateParams.id
+            }).$promise;
+          }
+        }
       });
   });
