@@ -1,14 +1,43 @@
 <navbar></navbar>
 
-<div class="container">
-  <p>The delete user and user index api routes are restricted to users with the 'admin' role.</p>
+<md-content flex-offset="20" flex="60" class="animate-if" ng-if="!addCourse && !editCourse">
+  <md-list>
+    <form name="newUserForm">
+      <md-list-item ng-if="isAdmin()" style="margin-bottom:10px;">
+        <md-input-container flex="50" class="md-block">
+          <label>Name</label>
+          <input ng-model="newUser.name" type="text" md-maxlength="80" required name="name">
+          <div ng-messages="newUserForm.name.$error" role="alert">
+            <div ng-message="required">Please add a user name.</div>
+            <div ng-message="md-maxlength">The user name has to be less than 80 characters long.</div>
+          </div>
+        </md-input-container>
+        <md-input-container flex="50" class="md-block">
+          <label>E-mail</label>
+          <input required type="email" name="email" ng-model="newUser.email" minlength="6" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+          <div ng-messages="newUserForm.email.$error" role="alert">
+            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+              Your email must be between 6 and 100 characters long and look like an e-mail address.
+            </div>
+          </div>
+        </md-input-container>
+        <md-button ng-click="addUser(newUserForm)">
+          <i class="fa fa-plus"> ADD</i>
+        </md-button>
+        <md-divider></md-divider>
+      </md-list-item>
+    </form>
+  </md-list>
   <ul class="list-group user-list">
-    <li class="list-group-item" ng-repeat="user in admin.users">
-	    <div class="user-info">
-	        <strong>{{user.name}}</strong><br>
-	        <span class="text-muted">{{user.email}}</span>
-	    </div>
-        <a ng-click="admin.delete(user)" class="trash"><span class="fa fa-trash fa-2x"></span></a>
+    <li class="list-group-item" ng-repeat="user in users">
+      <div class="user-info">
+        <strong>{{user.name}}</strong>
+        <br>
+        <span class="text-muted">{{user.email}}</span>
+      </div>
+      <a ng-click="delete(user)" class="trash">
+        <span class="fa fa-trash fa-2x"></span>
+      </a>
     </li>
   </ul>
-</div>
+</md-content>

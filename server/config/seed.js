@@ -63,14 +63,13 @@ Syllabus.find({}).removeAsync()
   .then(() => {
     Syllabus.createAsync({
         _id: '5677bcec37407aa60754252b',
+        academy: 'Business Academy SouthWest',
         iconurl: 'http://adrianmejia.com/images/MEAN_jarroba.png',
-        title: 'Syllabus for JS Web Apps',
-        subtitle: 'Spring 2015',
-        education: 'Computer Science',
-        course: 'JS Web Apps',
-        class: '4th semester, spring 2015',
+        year: 2016,
+        title: 'JS Web Apps',
+        education: 'Computer Science, 4th semester, Spring',
         lecturer: 'Lars Juul Bilde',
-        academy: 'ErhvervsAkademi SydVest',
+        objectives: 'Learn how to make a MEAN fullstack using JS',
         weekplans: [{
           week: 4,
           topics: '<ul><li>Go to this page&nbsp;<a href="http://google.com">http://google.com</a><a href="http://google.com"></a></li><li>Do this</li><li>Then This</li><li>Drink this.</li><li>I like cheese.</li></ul>',
@@ -86,7 +85,15 @@ Syllabus.find({}).removeAsync()
           assignments: '<ul><li>Find the day</li><li>Run over here!</li></ul><p style="text-align: center; "><iframe frameborder="0" src="//www.youtube.com/embed/FrTxjO6waNs" width="640" height="360" class="note-video-clip"></iframe><br></p>',
           teaser: 'Introduction, get the IDE up and running. Activities and views'
         }],
-        year: 2015
+      }, {
+        _id: '569d2d9b9f72ae8586bdad04',
+        academy: 'ErhvervsAkademi SydVest',
+        iconurl: 'http://www.canon.dk/Images/Android-logo_tcm81-1232684.png',
+        year: 2016,
+        title: 'Android Development',
+        education: 'Computer Science, 4th semester, Spring',
+        lecturer: 'Ole Eriksen',
+        objectives: 'Learn how to make a great Android Applications\nImportant stuff'
       })
       .then(() => {
         console.log('finished populating syllabuses');

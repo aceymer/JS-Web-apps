@@ -14,7 +14,8 @@ angular.module('virtualunitedApp', [
     'ngMaterial',
     'ngVideoPreview',
     'summernote',
-    'ngAnimate'
+    'ngAnimate',
+    'ngMessages'
   ])
   .config(function($urlRouterProvider, $locationProvider) {
     $urlRouterProvider

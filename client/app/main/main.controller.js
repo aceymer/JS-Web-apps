@@ -3,7 +3,7 @@
 (function() {
 
   angular.module('virtualunitedApp')
-    .controller('MainController', function($scope, $state, $stateParams, $mdToast, $mdDialog, socket, syllabuses, Auth) {
+    .controller('MainController', function($scope, $state, $stateParams, $mdToast, $mdDialog, socket, syllabuses, Syllabus, Auth) {
       $scope.isAdmin = Auth.isAdmin;
 
       var initData = function(syllabuses){
@@ -98,6 +98,19 @@
             });
 
         });
+      };
+
+      $scope.options = {
+        toolbar: [
+                ['headline', ['style']],
+                ['style', ['bold', 'italic', 'underline', 'superscript', 'subscript', 'strikethrough', 'clear']],
+                ['fontface', ['fontname']],
+                ['textsize', ['fontsize']],
+                ['fontclr', ['color']],
+                ['alignment', ['ul', 'ol', 'paragraph', 'lineheight']],
+                ['view', ['fullscreen', 'codeview']],
+                ['help', ['help']]
+            ]
       };
 
       initData(syllabuses);

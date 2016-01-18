@@ -20,8 +20,8 @@
       <img ng-src="{{item.iconurl}}?{{$index}}" class="md-avatar" />
       <div class="md-list-item-text" layout="column">
         <h3>{{ item.title }}</h3>
-        <h4>{{ item.subtitle }}</h4>
-        <p>{{ item.lecturer }}</p>
+        <h4>{{ item.education }} {{ syllabus.year }}</h4>
+        <p>{{ item.academy }}, {{ item.lecturer }}</p>
       </div>
       <div pull-right style="text-align: right; align: top;">
         <md-button ng-if="isAdmin()" style="margin-top:-15px;" class="md-secondary" aria-label="Delete syllabus" ng-click="deleteSyllabus(item, $event)">
@@ -45,15 +45,7 @@
     <md-input-container class="md-block">
       <label>Title</label>
       <input md-maxlength="30" required name="title" ng-model="newSyllabus.title">
-      <div ng-messages="newCourseForm.title.$error">
-        <div ng-message="required">This is required.</div>
-        <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
-      </div>
-    </md-input-container>
-    <md-input-container class="md-block">
-      <label>Subtitle</label>
-      <input md-maxlength="30" required name="subtitle" ng-model="newSyllabus.subtitle">
-      <div ng-messages="newCourseForm.subtitle.$error">
+      <div ng-messages="newCourseForm.title.$error" role="alert">
         <div ng-message="required">This is required.</div>
         <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
       </div>
@@ -61,7 +53,7 @@
     <md-input-container class="md-block">
       <label>Academy</label>
       <input md-maxlength="30" required name="academy" ng-model="newSyllabus.academy">
-      <div ng-messages="newCourseForm.academy.$error">
+      <div ng-messages="newCourseForm.academy.$error" role="alert">
         <div ng-message="required">This is required.</div>
         <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
       </div>
@@ -69,23 +61,7 @@
     <md-input-container class="md-block">
       <label>Education</label>
       <input md-maxlength="30" required name="education" ng-model="newSyllabus.education">
-      <div ng-messages="newCourseForm.education.$error">
-        <div ng-message="required">This is required.</div>
-        <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
-      </div>
-    </md-input-container>
-    <md-input-container class="md-block">
-      <label>Course name</label>
-      <input md-maxlength="30" required name="course" ng-model="newSyllabus.course">
-      <div ng-messages="newCourseForm.course.$error">
-        <div ng-message="required">This is required.</div>
-        <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
-      </div>
-    </md-input-container>
-    <md-input-container class="md-block">
-      <label>Class</label>
-      <input md-maxlength="30" required name="class" ng-model="newSyllabus.class">
-      <div ng-messages="newCourseForm.class.$error">
+      <div ng-messages="newCourseForm.education.$error" role="alert">
         <div ng-message="required">This is required.</div>
         <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
       </div>
@@ -93,10 +69,23 @@
     <md-input-container class="md-block">
       <label>Lecturer</label>
       <input md-maxlength="30" required name="lecturer" ng-model="newSyllabus.lecturer">
-      <div ng-messages="newCourseForm.lecturer.$error">
+      <div ng-messages="newCourseForm.lecturer.$error" role="alert">
         <div ng-message="required">This is required.</div>
         <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
       </div>
+    </md-input-container>
+    <md-input-container flex="15" class="md-block">
+      <label>year</label>
+      <input required min="2000" max="2100" type="Number" name="year" ng-model="newSyllabus.year">
+      <div ng-messages="newCourseForm.year.$error" role="alert">
+        <div ng-message="required">Please specify a year.</div>
+        <div ng-message="min"> Must be a year between 2000 and 2100 </div>
+        <div ng-message="max"> Must be a year between 2000 and 2100</div>
+      </div>
+    </md-input-container>
+    <md-input-container class="md-block">
+      <h6 style="margin-top:-10px">Objectives</h6>
+      <div summernote style="padding:2px; border:2px dashed #e4e5e7;" config="options" contentEditable=true data-ph="Insert objectives" ng-model="newSyllabus.objectives"></div>
     </md-input-container>
     <md-input-container class="md-block">
       <label>Icon url</label>

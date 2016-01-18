@@ -4,14 +4,13 @@ var mongoose = require('bluebird').promisifyAll(require('mongoose')),
     Schema = mongoose.Schema;
 
 var SyllabusSchema = new mongoose.Schema({
-  iconurl: String,
-  title: String,
-  subtitle: String,
-  education: String,
-  course: String,
-  class: String,
-  lecturer: String,
   academy: String,
+  year: Number,
+  title: String,
+  education: String,
+  lecturer: String,
+  objectives: String,
+  iconurl: String,
   weekplans: [{
     week: Number,
     summary: String,
@@ -20,8 +19,7 @@ var SyllabusSchema = new mongoose.Schema({
     videos: String,
     assignments: String,
     teaser: String
-  }],
-  year: Number
+  }]
 });
 
 export default mongoose.model('Syllabus', SyllabusSchema);

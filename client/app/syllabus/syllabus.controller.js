@@ -1,12 +1,9 @@
 'use strict';
 
 angular.module('virtualunitedApp')
-  .controller('SyllabusCtrl', function($scope, $state, $stateParams, $mdDialog, $mdMedia, $mdToast, $sce, syllabus, Auth) {
+  .controller('SyllabusCtrl', function($scope, $state, $stateParams, $mdDialog, $mdMedia, $mdToast, $sce, syllabus, Syllabus, Auth) {
     $scope.isAdmin = Auth.isAdmin;
-
     var initData = function(syllabus) {
-      console.log(syllabus);
-
       $scope.syllabus = syllabus;
       setWeekNums();
     };
@@ -21,23 +18,22 @@ angular.module('virtualunitedApp')
       });
     };
 
-    $scope.addWeekplan = function() {
-      $scope.newWeekplan = {
-        week: $scope.newWeek
-      };
-      $scope.syllabus.weekplans.push($scope.newWeekplan);
-      Syllabus.update({
-        id: $scope.syllabus._id
-      }, $scope.syllabus, function(syllabus) {
-        $scope.syllabus = syllabus;
-        setWeekNums();
-        var toast = $mdToast.simple()
-          .textContent('Weekplan created')
-          .action('OK')
-          .highlightAction(false)
-          .position('top');
-        $mdToast.show(toast);
-      });
+    $scope.addWeekplan = function(form) {
+      if (form.$valid) {
+        $scope.syllabus.weekplans.push($scope.newWeekplan);
+        Syllabus.update({
+          id: $scope.syllabus._id
+        }, $scope.syllabus, function(syllabus) {
+          $scope.syllabus = syllabus;
+          setWeekNums();
+          var toast = $mdToast.simple()
+            .textContent('Weekplan created')
+            .action('OK')
+            .highlightAction(false)
+            .position('top');
+          $mdToast.show(toast);
+        });
+      }
     };
 
     var setWeekNums = function() {
@@ -48,12 +44,18 @@ angular.module('virtualunitedApp')
       for (var i = 1; i < weeksInYear + 1; i++) {
         $scope.weeks.push(i);
       }
-      $scope.syllabus.weekplans.forEach(function(weekplan) {
-        _.remove($scope.weeks, function(week) {
-          return week === weekplan.week;
+      if($scope.syllabus.weekplans && $scope.syllabus.weekplans.length > 0){
+        $scope.syllabus.weekplans.forEach(function(weekplan) {
+          _.remove($scope.weeks, function(week) {
+            if(weekplan){
+              return week === weekplan.week;
+            }
+          });
         });
-      });
-      $scope.newWeek = moment().week();
+        $scope.currentWeek = moment().week();
+      }
+      $scope.newWeekplan = {teaser:""};
+
     };
 
     $scope.toTrusted = function(htmlCode) {
