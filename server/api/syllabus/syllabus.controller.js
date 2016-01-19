@@ -70,14 +70,15 @@ function removeEntity(res) {
 
 // Gets a list of Syllabuss
 export function index(req, res) {
-  Syllabus.findAsync()
+  Syllabus.find({}).populate('owner', 'name email')
+    .execAsync()
     .then(responseWithResult(res))
     .catch(handleError(res));
 }
 
 // Gets a single Syllabus from the DB
 export function show(req, res) {
-  Syllabus.findById(req.params.id)
+  Syllabus.findById(req.params.id).populate('owner', 'name email')
     .execAsync()
     .then(handleEntityNotFound(res))
     .then(responseWithResultWeekplan(res))
@@ -87,7 +88,8 @@ export function show(req, res) {
 // Gets a single weekplan from the DB
 export function getWeekplan(req, res) {
   Syllabus.findOne({_id: req.params.sid, 'weekplans._id': req.params.wid}, {'weekplans.$': 1})
-    .select('year iconurl title subtitle weekplans education course class lecturer academy')
+    .deepPopulate('owner')
+    .select('year iconurl title subtitle weekplans education course class owner lecturer academy')
     .execAsync()
     .then(handleEntityNotFound(res))
     .then(responseWithResult(res))
@@ -126,7 +128,10 @@ export function update(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  Syllabus.findByIdAsync(req.params.id)
+  Syllabus.findById(req.params.id)
+    .deepPopulate('owner')
+    .select('year iconurl title subtitle weekplans education course class owner lecturer academy')
+    .execAsync()
     .then(handleEntityNotFound(res))
     .then(saveUpdates(req.body))
     .then(responseWithResult(res))

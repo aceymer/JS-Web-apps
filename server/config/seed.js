@@ -4,41 +4,8 @@
  */
 
 'use strict';
-import Thing from '../api/thing/thing.model';
 import User from '../api/user/user.model';
 import Syllabus from '../api/syllabus/syllabus.model';
-
-Thing.find({}).removeAsync()
-  .then(() => {
-    Thing.create({
-      name: 'Development Tools',
-      info: 'Integration with popular tools such as Bower, Grunt, Babel, Karma, ' +
-        'Mocha, JSHint, Node Inspector, Livereload, Protractor, Jade, ' +
-        'Stylus, Sass, and Less.'
-    }, {
-      name: 'Server and Client integration',
-      info: 'Built with a powerful and fun stack: MongoDB, Express, ' +
-        'AngularJS, and Node.'
-    }, {
-      name: 'Smart Build System',
-      info: 'Build system ignores `spec` files, allowing you to keep ' +
-        'tests alongside code. Automatic injection of scripts and ' +
-        'styles into your index.html'
-    }, {
-      name: 'Modular Structure',
-      info: 'Best practice client and server structures allow for more ' +
-        'code reusability and maximum scalability'
-    }, {
-      name: 'Optimized Build',
-      info: 'Build process packs up your templates as a single JavaScript ' +
-        'payload, minifies your scripts/css/images, and rewrites asset ' +
-        'names for caching.'
-    }, {
-      name: 'Deployment Ready',
-      info: 'Easily deploy your app to Heroku or Openshift with the heroku ' +
-        'and openshift subgenerators'
-    });
-  });
 
 User.find({}).removeAsync()
   .then(() => {
@@ -48,11 +15,19 @@ User.find({}).removeAsync()
         email: 'test@example.com',
         password: 'test'
       }, {
+        _id: '569e69cc1ab998358d37667d',
         provider: 'local',
         role: 'admin',
-        name: 'Admin',
-        email: 'admin@example.com',
+        name: 'Lars Bilde',
+        email: 'ljb@easv.dk',
         password: 'admin'
+      }, {
+        _id: '569e69cc1ab998358d37667e',
+        provider: 'local',
+       role: 'admin',
+       name: 'Ole Eriksen',
+       email: 'oe@easv.dk',
+       password: 'admin'
       })
       .then(() => {
         console.log('finished populating users');
@@ -68,7 +43,7 @@ Syllabus.find({}).removeAsync()
         year: 2016,
         title: 'JS Web Apps',
         education: 'Computer Science, 4th semester, Spring',
-        lecturer: 'Lars Juul Bilde',
+        owner: '569e69cc1ab998358d37667d',
         objectives: 'Learn how to make a MEAN fullstack using JS',
         weekplans: [{
           week: 4,
@@ -92,7 +67,7 @@ Syllabus.find({}).removeAsync()
         year: 2016,
         title: 'Android Development',
         education: 'Computer Science, 4th semester, Spring',
-        lecturer: 'Ole Eriksen',
+        owner: '569e69cc1ab998358d37667e',
         objectives: 'Learn how to make a great Android Applications\nImportant stuff'
       })
       .then(() => {

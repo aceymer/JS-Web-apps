@@ -3,6 +3,11 @@
 angular.module('virtualunitedApp')
   .controller('SyllabusCtrl', function($scope, $state, $stateParams, $mdDialog, $mdMedia, $mdToast, $sce, syllabus, Syllabus, Auth) {
     $scope.isAdmin = Auth.isAdmin;
+
+    $scope.isOwner = function(syllabus){
+      return Auth.getCurrentUser()._id === syllabus.owner._id;
+    }
+
     var initData = function(syllabus) {
       $scope.syllabus = syllabus;
       setWeekNums();
@@ -26,6 +31,8 @@ angular.module('virtualunitedApp')
         }, $scope.syllabus, function(syllabus) {
           $scope.syllabus = syllabus;
           setWeekNums();
+          form.$setPristine();
+          form.$setUntouched();
           var toast = $mdToast.simple()
             .textContent('Weekplan created')
             .action('OK')
@@ -54,7 +61,7 @@ angular.module('virtualunitedApp')
         });
         $scope.currentWeek = moment().week();
       }
-      $scope.newWeekplan = {teaser:""};
+      $scope.newWeekplan = {};
 
     };
 
@@ -82,7 +89,7 @@ angular.module('virtualunitedApp')
           $scope.syllabus = syllabus;
           setWeekNums();
           var toast = $mdToast.simple()
-            .textContent('Weekplan updated')
+            .textContent('Weekplan Deleted')
             .action('OK')
             .highlightAction(false)
             .position('top');

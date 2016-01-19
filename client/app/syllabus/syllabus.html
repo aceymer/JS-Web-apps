@@ -15,7 +15,7 @@
         <div flex-sm="100" flex-xs="100" class="md-list-item-text" layout="column">
           <h2>{{ syllabus.title }}</h2>
           <h3>{{ syllabus.education }} {{ syllabus.year }}</h3>
-          <h4>{{ syllabus.academy }}, {{ syllabus.lecturer }}</h4>
+          <h4>{{ syllabus.academy }}, {{ syllabus.lecturer || syllabus.owner.name  }}</h4>
         </div>
       </md-list-item>
     </div>
@@ -27,7 +27,7 @@
   <div flex-sm="100" flex-xs="100" layout="column">
     <md-list>
       <form name="newWeekplanForm">
-        <md-list-item ng-if="isAdmin()" style="margin-bottom:10px;">
+        <md-list-item ng-if="isAdmin() && isOwner(syllabus)" style="margin-bottom:10px;">
           <md-input-container flex="15" class="md-block">
             <label>Week</label>
             <input required min="1" max="43" ng-model="newWeekplan.week" type="Number" name="weekOfYear">
@@ -55,7 +55,7 @@
       <md-list-item ng-click="goToWeekPlan(weekplan, $event)" ng-repeat="weekplan in syllabus.weekplans | orderBy : '-week'">
         <p flex="10"><i class="fa fa-calendar"></i> Week {{weekplan.week}} </p>
         <p flex pull-right>{{weekplan.teaser}}</p>
-        <div ng-if="isAdmin()" flex="15">
+        <div ng-if="isAdmin() && isOwner(syllabus)" flex="15">
           <md-menu class="md-secondary">
             <!-- Trigger element is a md-button with an icon -->
             <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">

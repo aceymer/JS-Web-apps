@@ -1,7 +1,8 @@
 'use strict';
 
 var mongoose = require('bluebird').promisifyAll(require('mongoose')),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema,
+    deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 var SyllabusSchema = new mongoose.Schema({
   academy: String,
@@ -9,6 +10,10 @@ var SyllabusSchema = new mongoose.Schema({
   title: String,
   education: String,
   lecturer: String,
+  owner: {
+    type: Schema.ObjectId,
+    ref: 'User'
+  },
   objectives: String,
   iconurl: String,
   weekplans: [{
@@ -20,6 +25,14 @@ var SyllabusSchema = new mongoose.Schema({
     assignments: String,
     teaser: String
   }]
+});
+
+SyllabusSchema.plugin(deepPopulate, {
+  populate: {
+    'owner': {
+      select: 'name email'
+    }
+  }
 });
 
 export default mongoose.model('Syllabus', SyllabusSchema);

@@ -1,16 +1,22 @@
 'use strict';
 
 angular.module('virtualunitedApp')
-  .controller('WeekplanCtrl', function ($scope, $state, $stateParams, $sce, $mdToast, Syllabus, Auth) {
+  .controller('WeekplanCtrl', function ($scope, $state, $stateParams, $sce, $mdToast, Syllabus, syllabus, Auth) {
     $scope.isAdmin = Auth.isAdmin;
 
-    Syllabus.getWeekplan({ id: $stateParams.sid, wid: $stateParams.wid }, function(syllabus){
+    $scope.isOwner = function(syllabus){
+      return Auth.getCurrentUser()._id === syllabus.owner._id;
+    }
+
+    var initData = function(syllabus) {
       $scope.syllabus = syllabus;
       $scope.weekplan = syllabus.weekplans[0];
-    });
+    };
+
     $scope.goBack = function(){
       window.history.back();
     };
+
     $scope.edit = function(){
         $scope.editTopics = $scope.weekplan.topics;
         $scope.editVideos = $scope.weekplan.videos;
@@ -48,6 +54,6 @@ angular.module('virtualunitedApp')
       return $sce.trustAsHtml(htmlCode);
     };
 
-    $scope.anotherGoodOne = 'https://www.youtube.com/watch?v=18-xvIjH8T4';
+    initData(syllabus);
 
   });

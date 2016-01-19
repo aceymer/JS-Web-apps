@@ -10,7 +10,7 @@
 
     <div flex>
       <md-list-item >
-        <img ng-src="{{syllabus.iconurl}}" alt="MEAN" style="width:40px; height: auto; margin-right:10px;"> <h4> {{ syllabus.title }}, {{ syllabus.academy }}, {{ syllabus.lecturer }}</h4>
+        <img ng-src="{{syllabus.iconurl}}" alt="MEAN" style="width:40px; height: auto; margin-right:10px;"> <h4> {{ syllabus.title }}, {{ syllabus.academy }}, {{ syllabus.lecturer || syllabus.owner.name  }}</h4>
       </md-list-item>
     </div>
   </div>
@@ -22,12 +22,12 @@
     <md-card>
       <md-card-content layout="row" layout-wrap>
         <div flex="15" flex-sm="100" flex-xs="100">
-          <div ng-if="isAdmin()" style="text-align: center;">
+          <div ng-if="isAdmin() && isOwner(syllabus)" style="text-align: center;">
             <md-button style="font-size:60px;" aria-label="Edit presentation" ng-click="edit()" class="md-raised">
               <i class="fa fa-calendar" ng-style="{true: {color: 'blue'}, false: {}}[editPage]"></i>
             </md-button>
           </div>
-          <div ng-if="!isAdmin()" style="text-align: center;">
+          <div ng-if="!isAdmin() && isOwner(syllabus)" style="text-align: center;">
             <div style="font-size:60px;">
               <i class="fa fa-calendar"></i>
             </div>
@@ -35,12 +35,12 @@
           <h3 style="text-align: center; margin-top:5px;">
             Week {{weekplan.week}}
           </h3>
-          <div ng-if="isAdmin()" ng-show="!editPage"  style="text-align: center;">
+          <div ng-if="isAdmin() && isOwner(syllabus)" ng-show="!editPage"  style="text-align: center;">
             <md-button style="font-size:20px;" aria-label="Edit presentation" ng-click="edit()" class="md-icon-button">
               <i class="fa fa-pencil"></i>
             </md-button>
           </div>
-          <div ng-if="isAdmin()" ng-show="editPage"  style="text-align: center;">
+          <div ng-if="isAdmin() && isOwner(syllabus)" ng-show="editPage"  style="text-align: center;">
             <md-button style="font-size:20px;" aria-label="Undo edit" ng-click="undo()" class="md-icon-button">
               <i class="fa fa-undo"></i>
             </md-button>

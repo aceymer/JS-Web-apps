@@ -6,6 +6,11 @@
     .controller('MainController', function($scope, $state, $stateParams, $mdToast, $mdDialog, socket, syllabuses, Syllabus, Auth) {
       $scope.isAdmin = Auth.isAdmin;
 
+      $scope.isOwner = function(syllabus){
+        return Auth.getCurrentUser()._id === syllabus.owner._id;
+      }
+
+
       var initData = function(syllabuses){
         $scope.syllabuses = syllabuses;
       };
@@ -18,6 +23,7 @@
       };
       $scope.createSyllabus = function(form) {
         if (form.$valid) {
+          $scope.newSyllabus.owner =  $scope.getCurrentUser();
           Syllabus.save($scope.newSyllabus, function(syllabus) {
             //data saved. do something here.
             var toast = $mdToast.simple()
@@ -26,6 +32,7 @@
               .highlightAction(false)
               .position('top right');
             $mdToast.show(toast);
+            syllabus.owner = $scope.getCurrentUser();
             $scope.syllabuses.push(syllabus);
             $scope.addCourse = false;
             $scope.editCourse = false;
@@ -65,7 +72,6 @@
       };
 
       $scope.deleteSyllabus = function(syllabus) {
-        $scope.deleteSyllabus = syllabus;
         var confirm = $mdDialog.confirm()
           .title('Delete Syllabus')
           .textContent('Are you sure you want to delete the Syllabus')
@@ -75,8 +81,8 @@
           .ok('Please do it!')
           .cancel('No I changed my mind');
         $mdDialog.show(confirm).then(function() {
-          $scope.deleteSyllabus.$delete({
-              id: $scope.deleteSyllabus._id
+          syllabus.$delete({
+              id: syllabus._id
             }, function success() {
               var toast = $mdToast.simple()
                 .textContent('Syllabus Deleted')
@@ -84,8 +90,8 @@
                 .highlightAction(false)
                 .position('top right');
               $mdToast.show(toast);
-              _.remove($scope.syllabuses, function(syllabus) {
-                return syllabus._id === $scope.deleteSyllabus._id;
+              _.remove($scope.syllabuses, function(syllabusFound) {
+                return syllabusFound._id === syllabus._id;
               });
             },
             function failure() {

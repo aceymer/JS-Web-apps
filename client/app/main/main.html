@@ -2,8 +2,8 @@
 
 <header class="hero-unit" id="banner" style="background:rgb(63,81,181)">
   <div class="container">
-    <h1>Knowledge Engine 2.0</h1>
-    <p class="lead">Welcome to the Knowledge Engine</p>
+    <h1>Course Planner</h1>
+    <p class="lead">Welcome to the Course Planner</p>
     <img src="assets/images/tech.jpg" alt="Technologi" style="width:15%;height:15%;">
   </div>
 </header>
@@ -16,20 +16,20 @@
   </div>
 
   <md-list>
-    <md-list-item ng-repeat="item in syllabuses" class="animate-repeat-course md-3-line" ng-click="goToCourse(item, $event)">
-      <img ng-src="{{item.iconurl}}?{{$index}}" class="md-avatar" />
+    <md-list-item ng-repeat="syllabus in syllabuses" class="animate-repeat-course md-3-line" ng-click="goToCourse(syllabus)">
+      <img ng-src="{{syllabus.iconurl}}?{{$index}}" class="md-avatar" />
       <div class="md-list-item-text" layout="column">
-        <h3>{{ item.title }}</h3>
-        <h4>{{ item.education }} {{ syllabus.year }}</h4>
-        <p>{{ item.academy }}, {{ item.lecturer }}</p>
+        <h3>{{ syllabus.title }}</h3>
+        <h4>{{ syllabus.education }} {{ syllabus.year }}</h4>
+        <p>{{ syllabus.academy }}, {{ syllabus.lecturer || syllabus.owner.name  }}</p>
       </div>
       <div pull-right style="text-align: right; align: top;">
-        <md-button ng-if="isAdmin()" style="margin-top:-15px;" class="md-secondary" aria-label="Delete syllabus" ng-click="deleteSyllabus(item, $event)">
+        <md-button ng-if="isAdmin() && isOwner(syllabus)" style="margin-top:-15px;" class="md-secondary" aria-label="Delete syllabus" ng-click="deleteSyllabus(syllabus)">
           <div style="font-size:20px; color:darkred;">
             <i class="fa fa-trash"></i>
           </div>
         </md-button>
-        <md-button ng-if="isAdmin()" class="md-secondary" style="margin-top:20px;" aria-label="Edit syllabus" ng-click="editSyllabus(item, $event)">
+        <md-button ng-if="isAdmin() && isOwner(syllabus)" class="md-secondary" style="margin-top:20px;" aria-label="Edit syllabus" ng-click="editSyllabus(syllabus)">
           <div style="font-size:20px;">
             <i class="fa fa-pencil"></i>
           </div>
@@ -67,10 +67,9 @@
       </div>
     </md-input-container>
     <md-input-container class="md-block">
-      <label>Lecturer</label>
-      <input md-maxlength="30" required name="lecturer" ng-model="newSyllabus.lecturer">
+      <label>Lecturer (Leave Empty to use creator)</label>
+      <input md-maxlength="30" name="lecturer" ng-model="newSyllabus.lecturer" >
       <div ng-messages="newCourseForm.lecturer.$error" role="alert">
-        <div ng-message="required">This is required.</div>
         <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
       </div>
     </md-input-container>
