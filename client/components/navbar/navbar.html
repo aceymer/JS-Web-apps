@@ -1,25 +1,44 @@
-<md-toolbar class="md-theme-light" ng-controller="NavbarController" style="background-color:#27359A">
-  <div class="md-toolbar-tools">
-    <h2>
-      <span>Course Planner</span>
-    </h2>
-    <md-button ui-sref="main">
-      Home
-    </md-button>
-    <md-button ng-show="nav.isAdmin()" aria-label="Admin" ui-sref="admin">
-      Admin
-    </md-button>
-    <span flex></span>
-    <md-button ng-hide="nav.isLoggedIn()" ui-sref="login" aria-label="Login">
-      Login
-    </md-button>
-    <h5 ng-show="nav.isLoggedIn()" class="navbar-text">Hello {{ nav.getCurrentUser().name }}</h5>
-    <md-button ng-show="nav.isLoggedIn()" class="md-fab md-mini" aria-label="Settings" ui-sref="settings">
-      <i class="glyphicon glyphicon-cog"></i>
-    </md-button>
-    <md-button ng-show="nav.isLoggedIn()" aria-label="Logout" ui-sref="logout">
-      Logout
-    </md-button>
-
-  </div>
-</md-toolbar>
+<div layout="column" ng-controller="NavbarController" ng-cloak>
+  <md-toolbar class="md-theme-light" style="background-color:#27359A">
+    <div class="md-toolbar-tools">
+      <h1>
+        <span>Course Planner</span>
+      </h1>
+      <md-button ui-sref="main" class="md-raised md-primary" style="margin-left:30px;">
+        View all Courses
+      </md-button>
+      <span flex></span>
+      <md-button ng-hide="isLoggedIn()" ui-sref="login" aria-label="Login">
+        Login
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-fab-speed-dial ng-show="isLoggedIn()" md-direction="down" md-open="isOpen" class="md-fab md-scale md-fab-top-right" ng-class="{ 'md-hover-full': hover }" ng-mouseenter="isOpen=true" ng-mouseleave="isOpen=false">
+    <md-fab-trigger>
+      <md-button aria-label="menu" class="md-fab md-primary" >
+        <md-tooltip md-direction="left" md-visible="tooltipVisible">Hi {{ getCurrentUser().name }}</md-tooltip>
+        <i class="fa fa-bars"></i>
+      </md-button>
+    </md-fab-trigger>
+    <md-fab-actions ng-if="isOpen">
+      <md-button aria-label="Manage users" class="md-fab md-raised md-mini" ui-sref="admin">
+        <md-tooltip md-direction="left" md-visible="tooltipVisible" md-autohide="false">
+          Manage users
+        </md-tooltip>
+        <i class="fa fa-users"></i>
+      </md-button>
+      <md-button aria-label="Change password" class="md-fab md-raised md-mini" ui-sref="settings">
+        <md-tooltip md-direction="left" md-visible="tooltipVisible" md-autohide="false">
+          Settings
+        </md-tooltip>
+        <i class="fa fa-wrench"></i>
+      </md-button>
+      <md-button aria-label="Log out" class="md-fab md-raised md-mini" ui-sref="logout">
+        <md-tooltip md-direction="left" md-visible="tooltipVisible" md-autohide="false">
+          Log out
+        </md-tooltip>
+        <i class="fa fa-sign-out"></i>
+      </md-button>
+    </md-fab-actions>
+  </md-fab-speed-dial>
+</div>

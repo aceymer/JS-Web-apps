@@ -12,6 +12,8 @@
 import _ from 'lodash';
 var Syllabus = require('./syllabus.model');
 
+var sanitizeHtml = require('sanitize-html');
+
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
   return function(err) {
@@ -68,6 +70,47 @@ function removeEntity(res) {
   };
 }
 
+function sanitizeHtmlField(field) {
+  return sanitizeHtml(field, {
+    allowedTags: [ 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
+    'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
+    'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'iframe', 'pre' ],
+    allowedAttributes: {
+      a: [ 'href', 'name', 'target' ],
+      // We don't currently allow img itself by default, but this
+      // would make sense if we did
+      img: [ 'src' ],
+      iframe: [ 'src', 'frameborder', 'width', 'height', 'class' ],
+      '*': [ 'href', 'align', 'alt', 'center', 'bgcolor', 'style' ]
+    },
+    // Lots of these won't come up by default because we don't allow them
+    selfClosing: [ 'img', 'br', 'hr', 'area', 'base', 'basefont', 'input', 'link', 'meta' ],
+    // URL schemes we permit
+    allowedSchemes: [ 'http', 'https', 'ftp', 'mailto' ],
+    allowedSchemesByTag: {}
+  });
+}
+
+function sanitizeHtmlBody(req) {
+  if(req && req.body){
+    if(req.body.summary){
+      req.body.summary = sanitizeHtmlField(req.body.summary);
+    }
+    if(req.body.topics){
+      req.body.topics = sanitizeHtmlField(req.body.topics);
+    }
+    if(req.body.literature){
+      req.body.literature = sanitizeHtmlField(req.body.literature);
+    }
+    if(req.body.videos){
+      req.body.videos = sanitizeHtmlField(req.body.videos);
+    }
+    if(req.body.assignments){
+      req.body.assignments = sanitizeHtmlField(req.body.assignments);
+    }
+  }
+}
+
 // Gets a list of Syllabuss
 export function index(req, res) {
   Syllabus.find({}).populate('owner', 'name email')
@@ -101,6 +144,7 @@ export function updateWeekplan(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
+  sanitizeHtmlBody(req);
 
   Syllabus.findOneAndUpdate({'weekplans._id': req.params.wid }, {'$set': {
       'weekplans.$.week': req.body.week,
@@ -118,6 +162,7 @@ export function updateWeekplan(req, res) {
 
 // Creates a new Syllabus in the DB
 export function create(req, res) {
+  sanitizeHtmlBody(req);
   Syllabus.createAsync(req.body)
     .then(responseWithResult(res, 201))
     .catch(handleError(res));
@@ -128,6 +173,7 @@ export function update(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
+  sanitizeHtmlBody(req);
   Syllabus.findById(req.params.id)
     .deepPopulate('owner')
     .select('year iconurl title subtitle weekplans education course class owner lecturer academy')
