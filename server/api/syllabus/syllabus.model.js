@@ -23,7 +23,8 @@ var SyllabusSchema = new mongoose.Schema({
     literature: String,
     videos: String,
     assignments: String,
-    teaser: String
+    teaser: String,
+    enabled: Boolean
   }]
 });
 

@@ -16,6 +16,40 @@ angular.module('virtualunitedApp')
     $scope.goBack = function() {
       window.history.back();
     };
+
+    $scope.toogleEnabled = function(weekplan){
+      var weekplanFound = _.find($scope.syllabus.weekplans, function(plan) {
+        return plan._id === weekplan._id;
+      });
+      if(weekplanFound){
+        weekplanFound.enabled = !weekplanFound.enabled;
+        Syllabus.update({
+          id: $scope.syllabus._id
+        }, $scope.syllabus, function(syllabus) {
+          $scope.syllabus = syllabus;
+          setWeekNums();
+          var toast = $mdToast.simple()
+            .textContent('Weekplan updated')
+            .action('OK')
+            .highlightAction(false)
+            .position('top right');
+          $mdToast.show(toast);
+        });
+      } else{
+        var toast = $mdToast.simple()
+          .textContent('Error finding weekplan')
+          .action('Bad')
+          .highlightAction(false)
+          .position('top right');
+        $mdToast.show(toast);
+      }
+
+    };
+
+    $scope.editWeekPlan = function(weekplan){
+      weekplan.editing = true;
+    };
+
     $scope.goToWeekPlan = function(weekplan) {
       $state.go('weekplan', {
         sid: $scope.syllabus._id,
@@ -25,6 +59,7 @@ angular.module('virtualunitedApp')
 
     $scope.addWeekplan = function(form) {
       if (form.$valid) {
+        $scope.newWeekplan.enabled = true;
         $scope.syllabus.weekplans.push($scope.newWeekplan);
         Syllabus.update({
           id: $scope.syllabus._id

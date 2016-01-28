@@ -29,6 +29,7 @@ module.exports = function(config) {
       'client/bower_components/moment/moment.js',
       'client/bower_components/summernote/dist/summernote.js',
       'client/bower_components/angular-summernote/dist/angular-summernote.js',
+      'client/bower_components/angular-xeditable/dist/js/xeditable.js',
       'client/bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'node_modules/socket.io-client/socket.io.js',
