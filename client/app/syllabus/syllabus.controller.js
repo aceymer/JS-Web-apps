@@ -135,7 +135,7 @@ angular.module('virtualunitedApp')
       return $sce.trustAsHtml(htmlCode);
     };
 
-    $scope.deleteWeekPlan = function(weekplan, event) {
+    $scope.deleteWeekPlan = function(event) {
       var confirm = $mdDialog.confirm()
         .title('Delete Weekplan')
         .textContent('Are you sure you want to delete the Weekplan')
@@ -146,7 +146,7 @@ angular.module('virtualunitedApp')
         .cancel('No I changed my mind');
       $mdDialog.show(confirm).then(function() {
         _.remove($scope.syllabus.weekplans, function(plan) {
-          return plan._id === weekplan._id;
+          return plan._id === $scope.editingWeekplan._id;
         });
 
         Syllabus.update({
@@ -160,6 +160,7 @@ angular.module('virtualunitedApp')
             .highlightAction(false)
             .position('top');
           $mdToast.show(toast);
+          $scope.editingWeekplan = undefined;
         });
       });
     };
