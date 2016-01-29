@@ -23,7 +23,7 @@
   <hr>
 </md-content>
 
-<md-content flex-offset="5" flex="90">
+<md-content flex-offset="5" flex="90" ng-if="!editingWeekplan">
   <div flex-sm="100" flex-xs="100" layout="column">
     <md-list>
       <form name="newWeekplanForm">
@@ -52,64 +52,67 @@
         </md-list-item>
 
       </form>
-      <md-list-item ng-disabled="!weekplan.enabled || weekplan.editing" aria-label="Weekplan" ng-click="goToWeekPlan(weekplan, $event)" ng-repeat="weekplan in syllabus.weekplans | orderBy : '-week'">
-        <div flex ng-if="!weekplan.editing" flex-sm="100" flex-xs="100" layout="row">
+      <md-list-item ng-disabled="!weekplan.enabled" aria-label="Weekplan" ng-click="goToWeekPlan(weekplan, $event)" ng-repeat="weekplan in syllabus.weekplans | orderBy : '-week'">
+        <div flex flex-sm="100" flex-xs="100" layout="row">
           <p flex="10"><i class="fa fa-calendar"></i> Week {{weekplan.week}} </p>
           <p flex pull-right>{{weekplan.teaser}}</p>
-          <div ng-if="isAdmin() && isOwner(syllabus)" flex="15">
-            <md-menu class="md-secondary">
-              <!-- Trigger element is a md-button with an icon -->
-              <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
-                <i class="fa fa-bars"></i>
-              </md-button>
-              <md-menu-content>
-                <md-menu-item>
-                  <md-button aria-label="Edit weekplan" class="md-secondary" ng-click="editWeekPlan(weekplan, $event)">
-                    <div style="color:darkblue;">
-                      <i class="fa fa-pencil"></i> Edit
-                    </div>
-                  </md-button>
-                </md-menu-item>
-                <md-menu-item>
-                  <md-button aria-label="Enable link weekplan" class="md-secondary" ng-click="toogleEnabled(weekplan, $event)">
-                    <div ng-if="weekplan.enabled" style="color:darkred;">
-                      <i class="fa fa-link"></i> Disable
-                    </div>
-                    <div ng-if="!weekplan.enabled" style="color:darkgreen;">
-                      <i class="fa fa-link"></i> Enable
-                    </div>
-                  </md-button>
-                </md-menu-item>
-                <md-menu-item>
-                  <md-button aria-label="Delete weekplan" class="md-secondary" ng-click="deleteWeekPlan(weekplan, $event)">
-                    <div style="color:darkred;">
-                      <i class="fa fa-trash"></i> Delete
-                    </div>
-                  </md-button>
-                </md-menu-item>
-              </md-menu-content>
-            </md-menu>
-          </div>
-        </div>
-        <p>
-          ost
-        </p>
-        <div flex ng-if="weekplan.editing && isAdmin() && isOwner(syllabus)" flex-sm="100" flex-xs="100" layout="row">
-          <form flex="100" name="newWeekplanEditForm"  layout="row">
-            <input flex="10" required min="1" max="43" class="form-control" placeholder="Week must be added" ng-model="weekplan.week" type="Number" name="weekOfYear">
-            <input flex ng-model="weekplan.teaser" type="text" class="form-control" placeholder="Teaser must be added" maxlength="100" required name="teaser">
-            <md-button ng-click="editWeekplan(newWeekplanEditForm)" style="margin-top: 0px; margin-bottom: 0px;">
-              <i class="fa fa-floppy-o"> Save</i>
+          <p flex></p>
+          <div ng-if="isAdmin() && isOwner(syllabus)">
+            <md-button style="font-size:20px;" ng-click="editWeekPlan(weekplan, $event)" class="md-secondary" aria-label="Edit weekplan">
+              <i class="fa fa-pencil"></i>
             </md-button>
-          </form>
+          </div>
         </div>
         <md-divider></md-divider>
       </md-list-item>
     </md-list>
     <h4>Objectives:</h4>
     <div ng-bind-html="toTrusted(syllabus.objectives)"></div>
-
   </div>
+</md-content>
+
+<md-content layout-padding flex-offset="20" flex="60" ng-if="editingWeekplan" class="animate-new-course">
+  <form name="editWeekplanForm" ng-if="isAdmin() && isOwner(syllabus)" style="margin-bottom:10px;">
+    <md-input-container flex="25" class="md-block">
+      <label>Week</label>
+      <input required min="1" max="43" ng-model="editingWeekplan.week" type="Number" name="weekOfYear">
+      <div ng-messages="editWeekplanForm.weekOfYear.$error" role="alert">
+        <div ng-message="required">Please specify a week.</div>
+        <div ng-message="min"> Must be a weeknumber 1-43 </div>
+        <div ng-message="max"> Must be a weeknumber 1-43 </div>
+      </div>
+    </md-input-container>
+
+    <md-input-container flex class="md-block">
+      <label>Theme</label>
+      <input ng-model="editingWeekplan.teaser" type="text" md-maxlength="100" required name="teaser">
+      <div ng-messages="editWeekplanForm.teaser.$error" role="alert">
+        <div ng-message="required">Please a theme text.</div>
+        <div ng-message="md-maxlength">The theme has to be less than 100 characters long.</div>
+      </div>
+    </md-input-container>
+
+    <md-input-container flex="30" class="md-block">
+      <md-switch ng-model="editingWeekplan.enabled">{{editingWeekplan.enabled ? "Enabled" : "Disbled"}}</md-switch>
+    </md-input-container>
+
+    <div layout-gt-xs="row">
+      <md-button ng-show="isAdmin()" aria-label="Delete weekplan" class="md-raised md-danger" ng-click="deleteWeekPlan(weekplan, $event)">
+        <div style="color:darkred;">
+          <i class="fa fa-trash"></i> Delete
+        </div>
+      </md-button>
+      <p flex></p>
+      <md-button aria-label="Save changes" ng-click="saveWeekplanEdit(editWeekplanForm)" class="md-raised md-primary">
+        <i class="fa fa-floppy-o"></i> Save changes
+      </md-button>
+      <md-button aria-label="Undo changes" ng-click="undoWeekplanEdit($event)" class="md-raised md-warning">
+        <i class="fa fa-undo"></i> Cancel
+      </md-button>
+    </div>
+  </form>
+
+
 </md-content>
 
 <footer></footer>

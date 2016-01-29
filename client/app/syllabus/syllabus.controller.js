@@ -47,8 +47,39 @@ angular.module('virtualunitedApp')
     };
 
     $scope.editWeekPlan = function(weekplan){
-      weekplan.editing = true;
+      $scope.editingWeekplan = weekplan;
     };
+
+    $scope.saveWeekplanEdit = function(form){
+      if (form.$valid) {
+        var weekplanFound = _.find($scope.syllabus.weekplans, function(plan) {
+          return plan._id === $scope.editingWeekplan._id;
+        });
+        weekplanFound.week = $scope.editingWeekplan.week;
+        weekplanFound.teaser = $scope.editingWeekplan.teaser;
+        weekplanFound.enabled = $scope.editingWeekplan.enabled;
+
+        Syllabus.update({
+          id: $scope.syllabus._id
+        }, $scope.syllabus, function(syllabus) {
+          $scope.syllabus = syllabus;
+          setWeekNums();
+          form.$setPristine();
+          form.$setUntouched();
+          var toast = $mdToast.simple()
+            .textContent('Weekplan updated')
+            .action('OK')
+            .highlightAction(false)
+            .position('top');
+          $mdToast.show(toast);
+        });
+        $scope.editingWeekplan = undefined;
+      }
+    }
+
+    $scope.undoWeekplanEdit = function(){
+      $scope.editingWeekplan = undefined;
+    }
 
     $scope.goToWeekPlan = function(weekplan) {
       $state.go('weekplan', {
