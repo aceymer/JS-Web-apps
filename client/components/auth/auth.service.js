@@ -45,7 +45,6 @@ function AuthService($location, $http, $cookies, $q, $state, appConfig, Util, Us
      * Delete access token and user info
      */
     logout() {
-      $state.go('main');
       $cookies.remove('token');
       currentUser = {};
     },

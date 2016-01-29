@@ -52,16 +52,22 @@
         </md-list-item>
 
       </form>
-      <md-list-item ng-disabled="!weekplan.enabled" aria-label="Weekplan" ng-click="goToWeekPlan(weekplan, $event)" ng-repeat="weekplan in syllabus.weekplans | orderBy : '-week'">
+      <md-list-item ng-if="!isAdmin() || !isOwner(syllabus)" ng-disabled="!weekplan.enabled" aria-label="Weekplan" ng-click="goToWeekPlan(weekplan, $event)" ng-repeat="weekplan in syllabus.weekplans | orderBy : '-week'">
         <div flex flex-sm="100" flex-xs="100" layout="row">
           <p flex="10"><i class="fa fa-calendar"></i> Week {{weekplan.week}} </p>
           <p flex pull-right>{{weekplan.teaser}}</p>
           <p flex></p>
-          <div ng-if="isAdmin() && isOwner(syllabus)">
-            <md-button style="font-size:20px;" ng-click="editWeekPlan(weekplan, $event)" class="md-secondary" aria-label="Edit weekplan">
-              <i class="fa fa-pencil"></i>
-            </md-button>
-          </div>
+        </div>
+        <md-divider></md-divider>
+      </md-list-item>
+      <md-list-item ng-if="isAdmin() && isOwner(syllabus)" ng-disabled="!weekplan.enabled" aria-label="Weekplan" ng-click="goToWeekPlan(weekplan, $event)" ng-repeat="weekplan in syllabus.weekplans | orderBy : '-week'">
+        <div flex flex-sm="100" flex-xs="100" layout="row">
+          <p flex="10"><i class="fa fa-calendar"></i> Week {{weekplan.week}} </p>
+          <p flex pull-right>{{weekplan.teaser}}</p>
+          <p flex></p>
+          <md-button style="font-size:20px;" ng-click="editWeekPlan(weekplan, $event)" class="md-secondary" aria-label="Edit weekplan">
+            <i class="fa fa-pencil"></i>
+          </md-button>
         </div>
         <md-divider></md-divider>
       </md-list-item>
